@@ -182,7 +182,7 @@ impl Controller for MprisController {
 
     fn set_volume(&self, volume: f64) {
         let current = self.volume.replace(volume);
-        
+
         // Only update MPRIS if the volume actually changed
         // This prevents feedback loops from MPRIS clients
         if (current - volume).abs() > 0.001 {
