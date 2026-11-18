@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2022  Emmanuele Bassi
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 
 use glib::clone;
 use gst::prelude::*;
@@ -21,6 +21,10 @@ mod imp {
         pub song: RefCell<Option<Song>>,
         pub peaks: RefCell<Option<Vec<(f64, f64)>>>,
         pub pipeline: RefCell<Option<(gst::Element, gst::bus::BusWatchGuard)>>,
+        /// Invalidates asynchronous cache loads and pipelines when the song
+        /// changes, so a slow result for the previous track cannot overwrite
+        /// the waveform (or the cache entry) of the current one.
+        pub generation: Cell<u64>,
     }
 
     #[glib::object_subclass]
@@ -70,8 +74,11 @@ impl Controller for WaveformGenerator {
     fn set_playback_state(&self, _playback_state: &PlaybackState) {}
 
     fn set_song(&self, song: &Song) {
+        let generation = self.imp().generation.get().wrapping_add(1);
+        self.imp().generation.set(generation);
+        self.stop_pipeline();
         self.imp().song.replace(Some(song.clone()));
-        self.load_peaks();
+        self.load_peaks(generation);
     }
 
     fn set_position(&self, _position: u64, _notify: bool) {}
@@ -88,7 +95,11 @@ impl WaveformGenerator {
         (*self.imp().peaks.borrow()).as_ref().cloned()
     }
 
-    fn save_peaks(&self) {
+    fn save_peaks(&self, generation: u64) {
+        if self.imp().generation.get() != generation {
+            return;
+        }
+
         if let Some(peaks) = self.peaks() {
             let song = match self.imp().song.borrow().as_ref() {
                 Some(s) => s.clone(),
@@ -124,9 +135,13 @@ impl WaveformGenerator {
         self.notify("has-peaks");
     }
 
-    async fn load_peaks_cache(&self, cache: impl AsRef<std::path::Path>) {
+    async fn load_peaks_cache(&self, cache: impl AsRef<std::path::Path>, generation: u64) {
         let file = gio::File::for_path(&cache);
         if let Ok((bytes, _tag)) = file.load_contents_future().await {
+            if self.imp().generation.get() != generation {
+                return;
+            }
+
             match serde_json::from_slice(&bytes[..]) {
                 Ok(p) => {
                     debug!("Loaded cached waveform file");
@@ -135,16 +150,20 @@ impl WaveformGenerator {
                 }
                 Err(err) => {
                     debug!("Could not parse cached waveform file: {}", err);
-                    self.generate_peaks();
+                    self.generate_peaks(generation);
                 }
             }
         } else {
+            if self.imp().generation.get() != generation {
+                return;
+            }
+
             debug!("Could not read cached waveform file");
-            self.generate_peaks();
+            self.generate_peaks(generation);
         }
     }
 
-    fn load_peaks(&self) {
+    fn load_peaks(&self, generation: u64) {
         let song = match self.imp().song.borrow().as_ref() {
             Some(s) => s.clone(),
             None => return,
@@ -160,22 +179,32 @@ impl WaveformGenerator {
             ctx.spawn_local(clone!(
                 #[weak(rename_to = this)]
                 self,
-                async move { this.load_peaks_cache(&cache).await }
+                async move { this.load_peaks_cache(&cache, generation).await }
             ));
+        } else {
+            self.imp().peaks.replace(None);
+            self.notify("has-peaks");
         }
     }
 
-    fn generate_peaks(&self) {
+    fn stop_pipeline(&self) {
         if let Some((pipeline, _bus_watch)) = self.imp().pipeline.take() {
-            // Stop any running pipeline, and ensure that we have nothing to
-            // report
-            self.imp().peaks.replace(None);
             pipeline.send_event(gst::event::Eos::new());
             match pipeline.set_state(gst::State::Null) {
                 Ok(_) => {}
                 Err(err) => warn!("Unable to set existing pipeline to Null state: {}", err),
             }
         }
+    }
+
+    fn generate_peaks(&self, generation: u64) {
+        if self.imp().generation.get() != generation {
+            return;
+        }
+
+        // Stop any running pipeline, and ensure that we have nothing to
+        // report
+        self.stop_pipeline();
 
         let song = match self.imp().song.borrow().as_ref() {
             Some(s) => s.clone(),
@@ -232,6 +261,10 @@ impl WaveformGenerator {
                 move |_, msg| {
                     use gst::MessageView;
 
+                    if this.imp().generation.get() != generation {
+                        return glib::ControlFlow::Break;
+                    }
+
                     match msg.view() {
                         MessageView::Eos(..) => {
                             debug!("End of waveform stream");
@@ -240,7 +273,7 @@ impl WaveformGenerator {
                                 .expect("Unable to set 'null' state");
                             // We're done
                             this.imp().pipeline.replace(None);
-                            this.save_peaks();
+                            this.save_peaks(generation);
                             return glib::ControlFlow::Break;
                         }
                         MessageView::Error(err) => {
@@ -250,7 +283,7 @@ impl WaveformGenerator {
                                 .expect("Unable to set 'null' state");
                             // We're done
                             this.imp().pipeline.replace(None);
-                            this.save_peaks();
+                            this.save_peaks(generation);
                             return glib::ControlFlow::Break;
                         }
                         MessageView::Element(element) => {
@@ -278,6 +311,10 @@ impl WaveformGenerator {
 
         match pipeline.set_state(gst::State::Playing) {
             Ok(_) => {
+                if self.imp().generation.get() != generation {
+                    let _ = pipeline.set_state(gst::State::Null);
+                    return;
+                }
                 self.imp().pipeline.replace(Some((pipeline, bus_watch)));
             }
             Err(err) => {
@@ -285,8 +322,10 @@ impl WaveformGenerator {
                 pipeline
                     .set_state(gst::State::Null)
                     .expect("Pipeline reset failed");
-                self.imp().peaks.replace(None);
-                self.notify("has-peaks");
+                if self.imp().generation.get() == generation {
+                    self.imp().peaks.replace(None);
+                    self.notify("has-peaks");
+                }
             }
         };
     }

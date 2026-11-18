@@ -1,11 +1,11 @@
 // SPDX-FileCopyrightText: 2022  Emmanuele Bassi
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use std::cell::Cell;
+use std::{cell::Cell, collections::HashMap};
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
-use crate::audio::{CoverCache, RepeatMode, ShuffleListModel, Song};
+use crate::audio::{clear_thumbnail_cache, CoverCache, RepeatMode, ShuffleListModel, Song};
 
 mod imp {
     use glib::{ParamSpec, ParamSpecEnum, ParamSpecObject, ParamSpecUInt, Value};
@@ -143,13 +143,113 @@ impl Queue {
         self.imp()
             .store
             .splice(self.imp().model.n_items(), 0, songs);
+        self.sort_by_album_and_track();
         self.notify("n-songs");
     }
 
-    pub fn remove_song(&self, song: &Song) {
-        let was_shuffled = self.imp().model.shuffled();
+    /// Keeps every album together and orders its tracks by the disc and track
+    /// numbers from the file tags. Albums keep the order in which they first
+    /// entered the queue, so queuing an album never reorders the queue.
+    pub fn sort_by_album_and_track(&self) {
+        if self.imp().model.shuffled() || self.n_songs() < 2 {
+            return;
+        }
+
+        let old_current_pos = self.current_song_index();
+        let current_song = self.current_song();
+        let mut songs: Vec<Song> = (0..self.n_songs())
+            .filter_map(|position| self.song_at(position))
+            .collect();
+
+        let mut album_order: HashMap<String, usize> = HashMap::new();
+        for (position, song) in songs.iter().enumerate() {
+            album_order
+                .entry(song.album().to_lowercase())
+                .or_insert(position);
+        }
+
+        songs.sort_by(|a, b| {
+            let album_a = album_order
+                .get(&a.album().to_lowercase())
+                .copied()
+                .unwrap_or(usize::MAX);
+            let album_b = album_order
+                .get(&b.album().to_lowercase())
+                .copied()
+                .unwrap_or(usize::MAX);
+
+            album_a
+                .cmp(&album_b)
+                .then_with(|| a.disc_number().cmp(&b.disc_number()))
+                .then_with(|| {
+                    let a_missing = a.track_number() == 0;
+                    let b_missing = b.track_number() == 0;
+                    a_missing
+                        .cmp(&b_missing)
+                        .then_with(|| a.track_number().cmp(&b.track_number()))
+                })
+                .then_with(|| a.title().to_lowercase().cmp(&b.title().to_lowercase()))
+                .then_with(|| a.uri().cmp(&b.uri()))
+        });
+
+        let unchanged = (0..self.n_songs())
+            .filter_map(|position| self.song_at(position))
+            .zip(songs.iter())
+            .all(|(current, sorted)| current.equals(sorted));
+        if unchanged {
+            return;
+        }
+
         let n_songs = self.n_songs();
-        for pos in 0..n_songs {
+        self.imp().store.splice(0, n_songs, &songs);
+
+        let new_current_pos = current_song.and_then(|current| {
+            (0..self.n_songs()).find(|&position| {
+                self.song_at(position)
+                    .is_some_and(|candidate| candidate.equals(&current))
+            })
+        });
+        self.imp().current_pos.replace(new_current_pos);
+        if old_current_pos != new_current_pos {
+            self.notify("current");
+        }
+    }
+
+    /// Inserts songs directly after the current one, keeping the rest of the
+    /// queue in its existing order. In shuffled mode the shuffle map is
+    /// updated without reshuffling the remaining songs.
+    pub fn insert_songs_after_current(&self, songs: &[impl IsA<glib::Object>]) -> bool {
+        if songs.is_empty() {
+            return false;
+        }
+
+        let Some(current_pos) = self.current_song_index() else {
+            self.add_songs(songs);
+            return true;
+        };
+
+        if self.imp().model.shuffled() {
+            self.imp()
+                .store
+                .splice(self.imp().store.n_items(), 0, songs);
+            self.imp()
+                .model
+                .insert_positions_after(current_pos, songs.len() as u32);
+        } else {
+            self.imp().store.splice(current_pos + 1, 0, songs);
+        }
+
+        self.notify("n-songs");
+        true
+    }
+
+    pub fn remove_song(&self, song: &Song) -> bool {
+        let was_shuffled = self.imp().model.shuffled();
+        let old_current_pos = self.current_song_index();
+        let old_current_song = self.current_song();
+
+        let mut removed = false;
+        for pos in 0..self.imp().store.n_items() {
             let s = self
                 .imp()
                 .store
@@ -159,25 +259,62 @@ impl Queue {
                 .unwrap();
             if s.equals(song) {
                 self.imp().store.remove(pos);
+                removed = true;
                 break;
             }
         }
 
-        if n_songs != self.n_songs() {
-            if was_shuffled {
-                self.imp().model.reshuffle(0);
-            }
-            self.notify("n-songs");
+        if !removed {
+            return false;
         }
 
-        if self.is_empty() {
-            self.imp().current_pos.replace(None);
+        // Reshuffling after removal keeps the shuffle map valid. The current
+        // song is then looked up again below, so playback is not disturbed
+        // when some other track is removed.
+        if was_shuffled {
+            self.imp().model.reshuffle(0);
         }
+
+        let new_current_song = if old_current_song
+            .as_ref()
+            .is_some_and(|current| current.equals(song))
+        {
+            // The playing track was removed: continue with the track that
+            // now occupies its old position, or with the previous last track.
+            let n_songs = self.n_songs();
+            if n_songs == 0 {
+                None
+            } else {
+                let pos = old_current_pos.unwrap_or(0).min(n_songs - 1);
+                self.song_at(pos)
+            }
+        } else {
+            // Removing another track must leave the current track untouched,
+            // even if its position in the queue changed.
+            old_current_song
+        };
+
+        let new_current_pos = new_current_song.and_then(|current| {
+            (0..self.n_songs()).find(|&pos| {
+                self.song_at(pos)
+                    .is_some_and(|candidate| candidate.equals(&current))
+            })
+        });
+
+        self.imp().current_pos.replace(new_current_pos);
+        if old_current_pos != new_current_pos {
+            self.notify("current");
+        }
+        self.notify("n-songs");
+
+        true
     }
 
     pub fn clear(&self) {
-        let mut cover_cache = CoverCache::global().lock().unwrap();
-        cover_cache.clear();
+        clear_thumbnail_cache();
+        if let Ok(mut cover_cache) = CoverCache::global().lock() {
+            cover_cache.clear();
+        }
 
         self.imp().current_pos.replace(None);
         self.imp().store.remove_all();

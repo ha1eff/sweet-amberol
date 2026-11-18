@@ -4,13 +4,13 @@ button.large {
 }
 
 .main-box {
-  padding: 6px;
+  padding: 2px;
   margin-left: 12px;
   margin-right: 12px;
 }
 
 songcover {
-  padding-bottom: 24px;
+  padding-bottom: 16px;
 }
 
 songcover picture.cover,
@@ -23,17 +23,17 @@ songcover image.card {
 }
 
 image.card.small {
-  border: 1px solid rgb(0 0 0 / 15%);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   background-clip: padding-box;
 }
 
 .main-window songcover picture.cover {
-  background: linear-gradient(to bottom, var(--background-color-0), var(--background-color-1));
+  background: linear-gradient(to bottom, @background_color_0, @background_color_1);
 }
 
 songdetails {
-  padding-top: 12px;
-  padding-bottom: 24px;
+  padding-top: 8px;
+  padding-bottom: 16px;
 }
 
 songdetails label.song-title {
@@ -55,7 +55,7 @@ waveformview {
 }
 
 playbackcontrol {
-  padding-bottom: 12px;
+  padding-bottom: 6px;
 }
 
 queuerow .currently-playing {
@@ -94,8 +94,8 @@ dragoverlay {
 }
 
 .drag-overlay-status-page {
-  background-color: color-mix(in srgb, var(--accent-bg-color) 50%, transparent);
-  color: var(--accent-fg-color);
+  background-color: alpha(@accent_bg_color, 0.5);
+  color: @accent_fg_color;
   padding: 32px;
 }
 
@@ -115,26 +115,33 @@ dragoverlay {
 
   --scrollbar-outline-color: rgb(255 255 255 / 25%);
 
-  background: linear-gradient(127deg, color-mix(in srgb, var(--background-color-0) 55%, transparent), color-mix(in srgb, var(--background-color-0) 0%, transparent) 70.71%),
-              linear-gradient(217deg, color-mix(in srgb, var(--background-color-1) 55%, transparent), color-mix(in srgb, var(--background-color-1) 0%, transparent) 70.71%),
-              linear-gradient(336deg, color-mix(in srgb, var(--background-color-2) 55%, transparent), color-mix(in srgb, var(--background-color-2) 0%, transparent) 70.71%);
+  background: linear-gradient(127deg, alpha(@background_color_0, .55), alpha(@background_color_0, 0) 70.71%),
+              linear-gradient(217deg, alpha(@background_color_1, .55), alpha(@background_color_1, 0) 70.71%),
+              linear-gradient(336deg, alpha(@background_color_2, .55), alpha(@background_color_2, 0) 70.71%);
   transition-property: background;
   transition-duration: 250ms;
   transition-timing-function: ease;
 }
 
+.main-window > overlay-split-view > widget.sidebar-pane {
+  /* libadwaita 1.5 paints the split-view sidebar opaque; let the window
+     gradient continue behind it, like newer libadwaita versions do through
+     --sidebar-bg-color. */
+  background-color: transparent;
+}
+
 .main-window > overlay-split-view > widget.background > playlistview {
-  background: linear-gradient(127deg, color-mix(in srgb, var(--background-color-0) 55%, transparent), color-mix(in srgb, var(--background-color-0) 0%, transparent) 70.71%),
-              linear-gradient(217deg, color-mix(in srgb, var(--background-color-1) 55%, transparent), color-mix(in srgb, var(--background-color-1) 0%, transparent) 70.71%),
-              linear-gradient(336deg, color-mix(in srgb, var(--background-color-2) 55%, transparent), color-mix(in srgb, var(--background-color-2) 0%, transparent) 70.71%),
-              var(--window-bg-color);
+  background: linear-gradient(127deg, alpha(@background_color_0, .55), alpha(@background_color_0, 0) 70.71%),
+              linear-gradient(217deg, alpha(@background_color_1, .55), alpha(@background_color_1, 0) 70.71%),
+              linear-gradient(336deg, alpha(@background_color_2, .55), alpha(@background_color_2, 0) 70.71%),
+              @window_bg_color;
   transition-property: background;
   transition-duration: 250ms;
   transition-timing-function: ease;
 }
 
 .main-window volume > scale trough highlight {
-  background: color-mix(in srgb, var(--accent-bg-color) var(--dim-opacity), transparent);
+  background: alpha(currentColor, 0.55);
 }
 
 volume:hover > scale { color: inherit; }
@@ -155,4 +162,192 @@ volume > scale trough slider { opacity: 0; }
 
     --scrollbar-outline-color: rgb(0 0 0 / 25%);
   }
+}
+
+
+.library-rail {
+  border-right: 1px solid alpha(currentColor, 0.12);
+}
+
+button.rail-button {
+  border-radius: 9px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+}
+
+button.rail-button:checked {
+  background: alpha(currentColor, 0.12);
+}
+
+gridview.album-grid {
+  border-spacing: 6px;
+  background: transparent;
+}
+
+gridview.album-grid > child {
+  border-radius: 12px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+gridview.album-grid > child:hover {
+  background: alpha(currentColor, 0.06);
+}
+
+gridview.album-grid > child:active {
+  background: alpha(currentColor, 0.1);
+}
+
+/* The GridView draws a keyboard focus ring around the whole cell after a
+   click; selection is indicated by the ring around the artwork instead. */
+gridview.album-grid > child:focus,
+gridview.album-grid > child:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Selection is shown as a ring around the artwork only, not around the
+   whole cell with its title and artist labels. */
+albumtile.selected picture.album-cover,
+albumtile.selected image.album-cover-placeholder {
+  box-shadow: 0 0 0 3px @accent_bg_color,
+              0 1px 3px rgba(0, 0, 0, 0.25),
+              0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+albumtile stack.cover-stack {
+  border-radius: 10px;
+}
+
+albumtile picture.album-cover {
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25),
+              0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+albumtile image.album-cover-placeholder {
+  border-radius: 10px;
+  background: alpha(currentColor, 0.08);
+}
+
+albumtile label.album-title {
+  font-weight: 700;
+  font-size: 92%;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+}
+
+albumtile label.album-artist {
+  font-size: 88%;
+  font-weight: 400;
+  opacity: 0.65;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+}
+
+button.play-random-button {
+  border-radius: 9px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  background: alpha(currentColor, 0.12);
+}
+
+button.play-random-button:hover {
+  background: alpha(currentColor, 0.18);
+}
+
+button.play-random-button:active {
+  background: alpha(currentColor, 0.24);
+}
+
+songdetails label.artist-link:hover {
+  color: inherit;
+  opacity: 1;
+}
+
+/* The artist credit is split into one link per artist, but it must keep
+   looking like the plain text it replaced. Cover every link state as themes
+   also style link:hover and link:visited with their own colour. */
+songdetails link,
+songdetails link:hover,
+songdetails link:visited,
+songdetails link:active,
+queuerow link,
+queuerow link:hover,
+queuerow link:visited,
+queuerow link:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+button.artist-link-button {
+  padding: 0 3px;
+  margin: 0;
+  min-height: 0;
+  border-radius: 4px;
+}
+
+button.artist-link-button:hover {
+  background: alpha(currentColor, 0.06);
+}
+
+button.artist-link-button:hover label.album-artist {
+  opacity: 1;
+  color: inherit;
+}
+
+playbackcontrol label.track-info {
+  font-size: 82%;
+  opacity: 0.75;
+}
+
+popover.album-context-menu > contents {
+  padding: 0;
+}
+
+popover.album-context-menu button {
+  padding: 5px 8px;
+  min-height: 28px;
+  border-radius: 6px;
+}
+
+popover.album-context-menu button > label {
+  font-weight: 400;
+}
+
+popover.album-context-menu button.album-context-action {
+  padding: 4px;
+  min-width: 40px;
+  min-height: 34px;
+}
+
+queuerow button.favorite-star {
+  opacity: 0;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  border-radius: 6px;
+}
+
+/* Favorite albums keep a dim star visible in every row; other albums only
+   reveal it for the current song or while the row is hovered. */
+queuerow.favorite button.favorite-star,
+queuerow.current button.favorite-star {
+  opacity: 0.35;
+}
+
+queuerow:hover button.favorite-star {
+  opacity: 1;
+}
+
+popover.album-context-menu label.album-context-confirm-label {
+  font-weight: 700;
+}
+
+popover.album-limit-popover > contents {
+  padding: 0;
 }

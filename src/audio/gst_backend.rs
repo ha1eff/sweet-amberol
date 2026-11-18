@@ -171,6 +171,14 @@ impl GstBackend {
         self.gst_player.seek(gst::ClockTime::from_seconds(position));
     }
 
+    pub fn position(&self) -> Option<u64> {
+        self.gst_player.position().map(|position| position.seconds())
+    }
+
+    pub fn duration(&self) -> Option<u64> {
+        self.gst_player.duration().map(|duration| duration.seconds())
+    }
+
     pub fn seek_start(&self) {
         self.gst_player.seek(gst::ClockTime::from_seconds(0));
     }

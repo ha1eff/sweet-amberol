@@ -43,6 +43,14 @@ mod imp {
 
     use super::*;
 
+    #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+    pub enum AnimationPhase {
+        #[default]
+        Idle,
+        Shrink,
+        Grow,
+    }
+
     #[derive(Debug, Default)]
     pub struct WaveformView {
         pub position: Cell<f64>,
@@ -53,6 +61,8 @@ mod imp {
         pub tick_id: RefCell<Option<gtk::TickCallbackId>>,
         pub first_frame_time: Cell<Option<i64>>,
         pub factor: Cell<Option<f64>>,
+        pub phase: Cell<AnimationPhase>,
+        pub animation_from: Cell<f64>,
     }
 
     #[glib::object_subclass]
@@ -478,85 +488,132 @@ impl WaveformView {
     }
 
     pub fn set_peaks(&self, peaks: Option<Vec<(f64, f64)>>) {
-        if let Some(tick_id) = self.imp().tick_id.replace(None) {
+        let imp = self.imp();
+
+        if let Some(tick_id) = imp.tick_id.replace(None) {
             tick_id.remove();
         }
 
         let peak_pairs = peaks.map(|p| self.normalize_peaks(p));
         let enable_animations = self.settings().is_gtk_enable_animations();
         if !enable_animations {
-            self.imp().peaks.replace(peak_pairs);
+            imp.peaks.replace(peak_pairs);
+            imp.next_peaks.replace(None);
+            imp.factor.replace(None);
+            imp.phase.replace(imp::AnimationPhase::Idle);
             self.queue_resize();
             return;
         }
 
-        self.imp().next_peaks.replace(peak_pairs);
-        self.imp().factor.set(None);
-        self.imp().first_frame_time.set(None);
+        let has_current_peaks = imp.peaks.borrow().is_some();
+
+        if peak_pairs.is_none() && !has_current_peaks {
+            imp.peaks.replace(None);
+            imp.next_peaks.replace(None);
+            imp.factor.replace(None);
+            imp.phase.replace(imp::AnimationPhase::Idle);
+            self.queue_resize();
+            return;
+        }
+
+        // Remember the height the waveform currently has, so a new update
+        // arriving in the middle of a transition does not make it jump.
+        let animation_from = if has_current_peaks {
+            imp.factor.get().unwrap_or(1.0).clamp(0.0, 1.0)
+        } else {
+            0.0
+        };
+        imp.animation_from.set(animation_from);
+
+        if has_current_peaks {
+            // Shrink the old waveform first; the new one is swapped in at
+            // zero height, so it never flashes at full size before growing.
+            imp.next_peaks.replace(peak_pairs);
+            imp.factor.replace(Some(animation_from));
+            imp.phase.replace(imp::AnimationPhase::Shrink);
+        } else {
+            // Nothing to shrink: show the new waveform immediately and grow
+            // it from the centre line.
+            imp.peaks.replace(peak_pairs);
+            imp.next_peaks.replace(None);
+            imp.factor.replace(Some(0.0));
+            imp.phase.replace(imp::AnimationPhase::Grow);
+        }
+        imp.first_frame_time.replace(None);
 
         let tick_id = self.add_tick_callback(clone!(
             #[strong(rename_to = this)]
             self,
             move |_, clock| {
+                let imp = this.imp();
                 let frame_time = clock.frame_time();
-                if let Some(first_frame_time) = this.imp().first_frame_time.get() {
-                    if frame_time < first_frame_time {
-                        warn!("Frame clock going backwards");
-                        return glib::ControlFlow::Continue;
-                    }
+                let Some(first_frame_time) = imp.first_frame_time.get() else {
+                    imp.first_frame_time.set(Some(frame_time));
+                    return glib::ControlFlow::Continue;
+                };
+                if frame_time < first_frame_time {
+                    warn!("Frame clock going backwards");
+                    return glib::ControlFlow::Continue;
+                }
 
-                    let has_peaks = this.imp().peaks.borrow().is_some();
-                    let has_next_peaks = this.imp().next_peaks.borrow().is_some();
+                let elapsed = (frame_time - first_frame_time) as f64;
+                let progress = (elapsed / ANIMATION_USECS).clamp(0.0, 1.0);
 
-                    if has_peaks && has_next_peaks {
-                        // Animate the existing peaks to zero
-                        let progress =
-                            1.0 - ((frame_time - first_frame_time) as f64 / ANIMATION_USECS);
-                        let delta = ease_out_cubic(progress);
-                        if delta < 0.0 {
-                            this.imp().peaks.replace(None);
-                            this.imp().factor.replace(None);
-                        } else {
-                            this.imp().factor.replace(Some(delta));
-                            this.queue_draw();
+                match imp.phase.get() {
+                    imp::AnimationPhase::Shrink => {
+                        if progress >= 1.0 {
+                            let next_peaks = imp.next_peaks.take();
+                            imp.peaks.replace(next_peaks);
+                            imp.first_frame_time.replace(None);
+                            this.queue_resize();
+
+                            if imp.peaks.borrow().is_some() {
+                                // Start growing the new waveform from the
+                                // centre line, without drawing it at full
+                                // height for a frame.
+                                imp.animation_from.set(0.0);
+                                imp.factor.replace(Some(0.0));
+                                imp.phase.replace(imp::AnimationPhase::Grow);
+                                this.queue_draw();
+                                return glib::ControlFlow::Continue;
+                            }
+
+                            imp.factor.replace(None);
+                            imp.phase.replace(imp::AnimationPhase::Idle);
+                            imp.tick_id.replace(None);
+                            return glib::ControlFlow::Break;
                         }
-                    } else if has_peaks && !has_next_peaks {
-                        // Animate the peaks from zero
-                        let progress = (frame_time - first_frame_time) as f64 / ANIMATION_USECS;
-                        let delta = ease_out_cubic(progress);
-                        if delta > 1.0 {
-                            // Animation complete
-                            this.imp().factor.replace(None);
-                            this.imp().first_frame_time.replace(None);
-                            this.imp().tick_id.replace(None);
+
+                        let factor = imp.animation_from.get() * (1.0 - ease_out_cubic(progress));
+                        imp.factor.replace(Some(factor));
+                        this.queue_draw();
+                    }
+                    imp::AnimationPhase::Grow => {
+                        if progress >= 1.0 {
+                            imp.factor.replace(None);
+                            imp.first_frame_time.replace(None);
+                            imp.phase.replace(imp::AnimationPhase::Idle);
+                            imp.tick_id.replace(None);
                             this.queue_resize();
                             return glib::ControlFlow::Break;
-                        } else {
-                            this.imp().factor.replace(Some(delta));
-                            this.queue_draw();
                         }
-                    } else if !has_peaks && has_next_peaks {
-                        // Swap peaks
-                        let next_peaks = this.imp().next_peaks.take();
-                        this.imp().peaks.replace(next_peaks);
-                        this.imp().factor.replace(None);
-                        this.imp().first_frame_time.replace(None);
-                        this.queue_resize();
-                    } else {
-                        // No peaks
-                        this.imp().factor.replace(None);
-                        this.imp().tick_id.replace(None);
-                        this.queue_resize();
+
+                        let factor = imp.animation_from.get()
+                            + (1.0 - imp.animation_from.get()) * ease_out_cubic(progress);
+                        imp.factor.replace(Some(factor));
+                        this.queue_draw();
+                    }
+                    imp::AnimationPhase::Idle => {
+                        imp.tick_id.replace(None);
                         return glib::ControlFlow::Break;
                     }
-                } else {
-                    this.imp().first_frame_time.replace(Some(frame_time));
                 }
+
                 glib::ControlFlow::Continue
             }
         ));
 
-        self.imp().tick_id.replace(Some(tick_id));
+        imp.tick_id.replace(Some(tick_id));
         self.queue_resize();
     }
 

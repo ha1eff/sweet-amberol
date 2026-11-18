@@ -5,21 +5,38 @@
     <value nick="track" value="1"/>
     <value nick="off" value="2"/>
   </enum>
-	<schema id="io.bassi.Amberol" path="/io/bassi/Amberol/">
-	  <key name="window-width" type="i">
-	    <default>600</default>
-	  </key>
-	  <key name="window-height" type="i">
-	    <default>300</default>
-	  </key>
-	  <key name="enable-recoloring" type="b">
-	    <default>true</default>
-	  </key>
+  <schema id="io.bassi.Amberol" path="/io/bassi/Amberol/">
+    <key name="window-width" type="i">
+      <default>1400</default>
+    </key>
+    <key name="window-height" type="i">
+      <default>820</default>
+    </key>
+    <key name="enable-recoloring" type="b">
+      <default>true</default>
+    </key>
     <key name="replay-gain" enum="io.bassi.Amberol.ReplayGainMode">
       <default>'off'</default>
     </key>
-	  <key name="background-play" type="b">
-	    <default>true</default>
-	  </key>
-	</schema>
+    <key name="background-play" type="b">
+      <default>true</default>
+    </key>
+    <key name="restore-session" type="b">
+      <default>false</default>
+    </key>
+    <key name="show-track-info" type="b">
+      <default>true</default>
+    </key>
+    <key name="library-folder" type="s">
+      <default>''</default>
+    </key>
+    <key name="album-limit" type="i">
+      <default>50</default>
+      <range min="1" max="10000"/>
+    </key>
+    <key name="album-limit-custom" type="i">
+      <default>100</default>
+      <range min="1" max="10000"/>
+    </key>
+  </schema>
 </schemalist>

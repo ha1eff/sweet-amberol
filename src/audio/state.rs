@@ -5,7 +5,7 @@ use std::cell::{Cell, RefCell};
 
 use gtk::{gdk, glib, prelude::*, subclass::prelude::*};
 
-use crate::audio::{PlaybackState, Song};
+use crate::audio::{memory, PlaybackState, Song};
 
 mod imp {
     use glib::{
@@ -49,6 +49,7 @@ mod imp {
                     ParamSpecString::builder("title").read_only().build(),
                     ParamSpecString::builder("artist").read_only().build(),
                     ParamSpecString::builder("album").read_only().build(),
+                    ParamSpecString::builder("track-info").read_only().build(),
                     ParamSpecUInt64::builder("duration").read_only().build(),
                     ParamSpecObject::builder::<gdk::Texture>("cover")
                         .read_only()
@@ -76,6 +77,7 @@ mod imp {
                 "title" => obj.title().to_value(),
                 "artist" => obj.artist().to_value(),
                 "album" => obj.album().to_value(),
+                "track-info" => obj.track_info().to_value(),
                 "duration" => obj.duration().to_value(),
                 "cover" => obj.cover().to_value(),
                 _ => unimplemented!(),
@@ -117,6 +119,14 @@ impl PlayerState {
         None
     }
 
+    pub fn track_info(&self) -> String {
+        if let Some(song) = &*self.imp().current_song.borrow() {
+            return song.track_info();
+        }
+
+        String::new()
+    }
+
     pub fn duration(&self) -> u64 {
         if let Some(song) = &*self.imp().current_song.borrow() {
             return song.duration();
@@ -127,7 +137,10 @@ impl PlayerState {
 
     pub fn cover(&self) -> Option<gdk::Texture> {
         if let Some(song) = &*self.imp().current_song.borrow() {
-            return song.cover_texture();
+            // The player displays the cover at up to 250 application pixels,
+            // so it keeps only the large texture for the current song instead
+            // of retaining one for every queued track.
+            return song.cover_texture_large();
         }
 
         None
@@ -153,12 +166,18 @@ impl PlayerState {
     }
 
     pub fn set_current_song(&self, song: Option<Song>) {
+        // The memory guard follows the size of the file that is playing: up
+        // to 100 MiB the whole player may use 150 MiB, larger files get their
+        // size plus 50 MiB for artwork and other data.
+        let file_size = song.as_ref().map(Song::file_size).unwrap_or(0);
         self.imp().current_song.replace(song);
+        memory::set_current_playback_size(file_size);
         self.imp().position.replace(0);
         self.notify("song");
         self.notify("title");
         self.notify("artist");
         self.notify("album");
+        self.notify("track-info");
         self.notify("duration");
         self.notify("cover");
         self.notify("position");

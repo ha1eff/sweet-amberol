@@ -49,6 +49,16 @@ mod imp {
     }
 
     impl ObjectImpl for Marquee {
+        fn signals() -> &'static [glib::subclass::Signal] {
+            static SIGNALS: OnceCell<Vec<glib::subclass::Signal>> = OnceCell::new();
+            SIGNALS.get_or_init(|| {
+                vec![glib::subclass::Signal::builder("link-activated")
+                    .param_types([String::static_type()])
+                    .build()]
+            })
+            .as_ref()
+        }
+
         fn properties() -> &'static [glib::ParamSpec] {
             Self::derived_properties()
         }
@@ -68,6 +78,18 @@ mod imp {
 
             self.child.set_parent(widget);
             self.child.set_xalign(0.5);
+            self.child.set_can_target(true);
+
+            self.child.connect_activate_link(clone!(
+                #[weak]
+                widget,
+                #[upgrade_or]
+                glib::Propagation::Stop,
+                move |_, uri| {
+                    widget.emit_by_name::<()>("link-activated", &[&uri]);
+                    glib::Propagation::Stop
+                }
+            ));
 
             let target = adw::CallbackAnimationTarget::new(clone!(
                 #[weak]
@@ -244,6 +266,15 @@ mod imp {
             }
         }
 
+        pub(super) fn set_markup(&self, value: &str) {
+            self.child.set_markup(value);
+
+            let animation = self.animation.get().unwrap();
+            if animation.state() == adw::AnimationState::Playing {
+                animation.skip();
+            }
+        }
+
         fn set_rotation_progress(&self, value: f32) {
             self.rotation_progress.replace(value.rem_euclid(1.0));
             self.obj().queue_draw();
@@ -301,5 +332,13 @@ glib::wrapper! {
 impl Default for Marquee {
     fn default() -> Self {
         glib::Object::new()
+    }
+}
+
+impl Marquee {
+    /// Sets Pango markup, used for artist strings that contain one link per
+    /// known artist.
+    pub fn set_markup(&self, markup: &str) {
+        self.imp().set_markup(markup);
     }
 }

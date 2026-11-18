@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2022  Emmanuele Bassi
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use std::{cell::RefCell, rc::Rc};
+use std::{cell::RefCell, rc::Rc, sync::Arc};
 
 use adw::prelude::AdwDialogExt;
 use adw::subclass::prelude::*;
@@ -16,6 +16,7 @@ use crate::{
     audio::AudioPlayer,
     config::{APPLICATION_ID, VERSION},
     i18n::i18n,
+    library::Library,
     utils,
     window::Window,
 };
@@ -30,6 +31,7 @@ mod imp {
     #[derive(Debug)]
     pub struct Application {
         pub player: Rc<AudioPlayer>,
+        pub library: Arc<Library>,
         pub receiver: RefCell<Option<Receiver<ApplicationAction>>>,
         pub background_hold: RefCell<Option<gio::ApplicationHoldGuard>>,
         pub settings: gio::Settings,
@@ -45,8 +47,14 @@ mod imp {
             let (sender, r) = async_channel::unbounded();
             let receiver = RefCell::new(Some(r));
 
+            let library = Library::open_default().unwrap_or_else(|err| {
+                log::error!("Unable to open the music library database: {err}");
+                Library::open_in_memory().expect("Unable to open an in-memory music library")
+            });
+
             Self {
                 player: AudioPlayer::new(sender),
+                library: Arc::new(library),
                 receiver,
                 background_hold: RefCell::default(),
                 settings: utils::settings_manager(),
@@ -66,10 +74,9 @@ mod imp {
             obj.set_accels_for_action("app.quit", &["<primary>q"]);
 
             obj.set_accels_for_action("queue.add-song", &["<primary>s"]);
-            obj.set_accels_for_action("queue.add-folder", &["<primary>a"]);
+            obj.set_accels_for_action("queue.add-folder", &["<primary><shift>a"]);
             obj.set_accels_for_action("queue.clear", &["<primary>L"]);
             obj.set_accels_for_action("queue.toggle", &["F9"]);
-            obj.set_accels_for_action("queue.search", &["<primary>F"]);
             obj.set_accels_for_action("queue.shuffle", &["<primary>r"]);
 
             obj.set_accels_for_action("win.seek-backwards", &["<primary>Left"]);
@@ -134,6 +141,10 @@ impl Application {
         self.imp().player.clone()
     }
 
+    pub fn library(&self) -> Arc<Library> {
+        self.imp().library.clone()
+    }
+
     fn setup_settings(&self) {
         self.imp().settings.connect_changed(
             Some("background-play"),
@@ -190,22 +201,33 @@ impl Application {
             window.upcast()
         };
 
+        window.present();
+
         #[cfg(any(target_os = "linux", target_os = "freebsd"))]
         self.request_background();
-
-        window.present();
     }
 
     fn setup_gactions(&self) {
         self.add_action_entries([
             gio::ActionEntry::builder("quit")
                 .activate(|app: &Application, _, _| {
+                    if let Some(window) = app
+                        .active_window()
+                        .and_then(|window| window.downcast::<Window>().ok())
+                    {
+                        window.save_session();
+                    }
                     app.quit();
                 })
                 .build(),
             gio::ActionEntry::builder("about")
                 .activate(|app: &Application, _, _| {
                     app.show_about();
+                })
+                .build(),
+            gio::ActionEntry::builder("shortcuts")
+                .activate(|app: &Application, _, _| {
+                    app.show_shortcuts();
                 })
                 .build(),
         ]);
@@ -225,6 +247,16 @@ impl Application {
                     .expect("Unable to store background-play setting");
             })
             .build()]);
+    }
+
+    fn show_shortcuts(&self) {
+        let builder = gtk::Builder::from_resource("/io/bassi/Amberol/shortcuts-dialog.ui");
+        if let Some(dialog) = builder.object::<gtk::ShortcutsWindow>("shortcuts_dialog") {
+            if let Some(window) = self.active_window() {
+                dialog.set_transient_for(Some(&window));
+            }
+            dialog.present();
+        }
     }
 
     fn show_about(&self) {
@@ -276,14 +308,32 @@ impl Application {
     #[cfg(any(target_os = "linux", target_os = "freebsd"))]
     fn request_background(&self) {
         let background_play = self.imp().settings.boolean("background-play");
-        if background_play {
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(clone!(
-                #[weak(rename_to = app)]
-                self,
-                async move { app.portal_request_background().await }
-            ));
+        if !background_play {
+            return;
         }
+
+        // Hold the application as soon as background playback is enabled.
+        // The hold keeps the process alive after the last window is closed,
+        // even if playback is paused. Relying on the portal response alone
+        // was not enough: the request is skipped when no window is active
+        // yet, and then closing the window quit the application.
+        if self.imp().background_hold.borrow().is_none() {
+            self.imp().background_hold.replace(Some(self.hold()));
+        }
+
+        // The background portal is only meaningful for sandboxed builds. For
+        // a regular build the request fails, which used to switch background
+        // playback off again; the application hold above is enough there.
+        if !ashpd::is_sandboxed() {
+            return;
+        }
+
+        let ctx = glib::MainContext::default();
+        ctx.spawn_local(clone!(
+            #[weak(rename_to = app)]
+            self,
+            async move { app.portal_request_background().await }
+        ));
     }
 
     #[cfg(not(any(target_os = "linux", target_os = "freebsd")))]

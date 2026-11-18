@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: amberol main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/amberol/-/issues/\n"
-"POT-Creation-Date: 2026-03-29 14:16+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-11 19:07+0500\n"
 "PO-Revision-Date: 2026-03-30 19:02+0300\n"
 "Last-Translator: Artur S0 <arturios2005@mail.ru>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
@@ -19,17 +19,17 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
 
-#: data/io.bassi.Amberol.desktop.in.in:2
+#: data/io.bassi.Amberol.desktop.in.in:3
 #: data/io.bassi.Amberol.metainfo.xml.in.in:6
 msgid "Amberol"
 msgstr "Amberol"
 
-#: data/io.bassi.Amberol.desktop.in.in:3
+#: data/io.bassi.Amberol.desktop.in.in:4
 msgid "Music Player"
 msgstr "Музыкальный проигрыватель"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.bassi.Amberol.desktop.in.in:11
+#: data/io.bassi.Amberol.desktop.in.in:12
 msgid "music;player;media;audio;playlist;"
 msgstr ""
 "music;player;media;audio;playlist;музыка;проигрыватель;медиа;аудио;список "
@@ -75,8 +75,570 @@ msgid "MPRIS integration"
 msgstr "интеграция с MPRIS"
 
 #: data/io.bassi.Amberol.metainfo.xml.in.in:48
+#: data/io.bassi.Amberol.metainfo.xml.in.in:50
 msgid "Emmanuele Bassi"
 msgstr "Emmanuele Bassi"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:69
+msgid "Allow opening the containing folder of the current song"
+msgstr "Открытие папки с текущей песней"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:70
+msgid "Fix various crashes"
+msgstr "Исправлены различные падения"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:71
+msgid "Handle playlist visibility better when loading or searching"
+msgstr "Улучшено управление видимостью плейлиста при загрузке и поиске"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:72
+msgid "Small quality of life improvements to the interface"
+msgstr "Небольшие улучшения удобства интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:73
+#: data/io.bassi.Amberol.metainfo.xml.in.in:82
+#: data/io.bassi.Amberol.metainfo.xml.in.in:93
+#: data/io.bassi.Amberol.metainfo.xml.in.in:105
+#: data/io.bassi.Amberol.metainfo.xml.in.in:115
+#: data/io.bassi.Amberol.metainfo.xml.in.in:125
+#: data/io.bassi.Amberol.metainfo.xml.in.in:161
+#: data/io.bassi.Amberol.metainfo.xml.in.in:174
+#: data/io.bassi.Amberol.metainfo.xml.in.in:219
+msgid "Translation updates"
+msgstr "Обновления переводов"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:80
+msgid "Update the metadata parsing library"
+msgstr "Обновлена библиотека разбора метаданных"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:81
+msgid "Release more resources when clearing the playlist"
+msgstr "При очистке плейлиста освобождается больше ресурсов"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:89
+msgid "Check for more file names for external album covers"
+msgstr "Поддержано больше имён файлов внешних обложек альбомов"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:90
+msgid "Update the MPRIS implementation for better conformance"
+msgstr "Обновлена реализация MPRIS для лучшего соответствия спецификации"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:91
+msgid "Set the Music folder as the initial location when adding songs"
+msgstr "Папка «Музыка» открывается по умолчанию при добавлении песен"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:92
+msgid "Various style improvements"
+msgstr "Различные улучшения оформления"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:99
+msgid "New versioning scheme! Amberol has switched to a year/release version."
+msgstr "Новая схема версионирования! Amberol перешёл на формат год/выпуск."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:100
+msgid ""
+"With the new GNOME release, we are now taking advantage of the new "
+"libadwaita UI elements and features."
+msgstr ""
+"С новым выпуском GNOME мы используем новые элементы интерфейса и возможности "
+"libadwaita."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:101
+msgid ""
+"If the song title, author, or album is too long, we now scroll their "
+"contents."
+msgstr ""
+"Если название песни, исполнитель или альбом слишком длинные, их содержимое "
+"теперь прокручивается."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:103
+msgid "Dependency updates for GTK, libadwaita, GStreamer, and lofty"
+msgstr "Обновлены зависимости GTK, libadwaita, GStreamer и lofty"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:104
+msgid "Bug fixes"
+msgstr "Исправления ошибок"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:111
+msgid "Bug fixes and small UI improvements"
+msgstr "Исправления ошибок и небольшие улучшения интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:113
+msgid "Ensure that the waveform display is always centered for short songs"
+msgstr "Осциллограмма коротких песен теперь всегда центрирована"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:114
+msgid "Fix display of non-square cover art"
+msgstr "Исправлено отображение неквадратных обложек"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:121
+msgid "The bug fixing comes in waves"
+msgstr "Волна исправлений ошибок"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:123
+msgid "More crash fixes related to the background playback"
+msgstr "Ещё несколько исправлений падений при фоновом воспроизведении"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:124
+msgid "Minor UI tweaks"
+msgstr "Небольшие правки интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:131
+#: data/io.bassi.Amberol.metainfo.xml.in.in:225
+msgid "Brown paper bag release!"
+msgstr "Экстренный выпуск с исправлением!"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:133
+msgid "Fix a crash when playing in the background"
+msgstr "Исправлено падение при фоновом воспроизведении"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:139
+msgid "New release, lots of small changes."
+msgstr "Новый выпуск с множеством небольших изменений."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:141
+msgid "Allow restoring the last playlist when starting a new session"
+msgstr "Восстановление последнего плейлиста при запуске"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:142
+msgid "Allow toggling the background playback"
+msgstr "Переключение фонового воспроизведения"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:143
+msgid "Add a quick mute/unmute button"
+msgstr "Добавлена кнопка быстрого включения и отключения звука"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:144
+msgid "Restructure the main UI to improve legibility of the controls"
+msgstr ""
+"Основной интерфейс переработан для лучшей читаемости элементов управления"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:145
+msgid "Do not add duplicate songs to the playlist"
+msgstr "Повторяющиеся песни больше не добавляются в плейлист"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:146
+msgid "Ensure that the playlist fits on mobile form factors"
+msgstr "Плейлист теперь помещается на мобильных экранах"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:147
+msgid "And lots of bug fixes and UI improvements"
+msgstr "А также множество исправлений ошибок и улучшений интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:153
+msgid "It's been a while!"
+msgstr "Давно не виделись!"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:155
+msgid "Allow dragging on the waveform to seek inside a song"
+msgstr "Перемотка по песне перетаскиванием осциллограммы"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:156
+msgid "Use the latest libadwaita about dialog"
+msgstr "Используется новый диалог «О программе» из libadwaita"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:157
+msgid "Use the latest lofty for improved song metadata detection"
+msgstr "Используется новый lofty для улучшенного определения метаданных песен"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:158
+msgid "Detect more external cover file names"
+msgstr "Распознаётся больше имён файлов внешних обложек"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:159
+msgid "Small improvements in the waveform animation"
+msgstr "Небольшие улучшения анимации осциллограммы"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:160
+msgid "Remove the unnecessary notification for the background portal"
+msgstr "Убрано лишнее уведомление фонового портала"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:167
+msgid "Small paper cuts, and ReplayGain"
+msgstr "Мелкие улучшения и ReplayGain"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:169
+msgid "Add support ReplayGain metadata in the audio files"
+msgstr "Добавлена поддержка метаданных ReplayGain в аудиофайлах"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:170
+msgid "Add support external cover art files for albums"
+msgstr "Добавлена поддержка файлов внешних обложек альбомов"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:171
+msgid "Improve the reliability of the playlist shuffle"
+msgstr "Повышена надёжность перемешивания плейлиста"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:172
+msgid "Tweak the playlist side bar to better fit on mobile form factors"
+msgstr "Боковая панель плейлиста лучше подходит для мобильных экранов"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:173
+msgid "New translation: Serbian"
+msgstr "Новый перевод: сербский"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:175
+#: data/io.bassi.Amberol.metainfo.xml.in.in:187
+msgid "Bug fixes and performance improvements"
+msgstr "Исправления ошибок и улучшения производительности"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:181
+msgid "Searchings deserves to be fuzzy"
+msgstr "Поиск заслуживает нечёткого совпадения"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:183
+msgid "Support fuzzy matching when searching inside the playlist"
+msgstr "Поддержка нечёткого поиска по плейлисту"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:184
+msgid "Add a key shortcut for toggling shuffle"
+msgstr "Добавлена комбинация клавиш для переключения перемешивания"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:185
+msgid "Allow opening folders with Amberol"
+msgstr "Amberol теперь открывает папки"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:186
+#: data/io.bassi.Amberol.metainfo.xml.in.in:206
+msgid "Lots of translation updates"
+msgstr "Множество обновлений переводов"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:193
+msgid "Bug fixes and UI improvements"
+msgstr "Исправления ошибок и улучшения интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:198
+msgid "More features for less memory!"
+msgstr "Больше возможностей при меньшем потреблении памяти!"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:200
+msgid ""
+"You can now search for songs in the playlist: just start typing and Amberol "
+"will display the matching songs. Search also works when selecting songs"
+msgstr ""
+"Теперь можно искать песни в плейлисте: просто начните вводить текст, и "
+"Amberol покажет совпадения. Поиск также работает при выборе песен"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:201
+msgid "Album art is shared across songs from the same album, saving memory"
+msgstr "Обложка альбома используется всеми песнями альбома, экономя память"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:202
+msgid ""
+"Amberol can now run in the background using the appropriate sandbox portal"
+msgstr ""
+"Amberol теперь может работать в фоне через соответствующий портал песочницы"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:203
+msgid "The window size is restored across sessions"
+msgstr "Размер окна сохраняется между сеансами"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:204
+msgid "You can now build and run Amberol on macOS"
+msgstr "Amberol теперь можно собрать и запустить на macOS"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:205
+msgid "Lots of bug fixes and UI improvements"
+msgstr "Множество исправлений ошибок и улучшений интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:212
+msgid "Lots of small UI fixes and stability improvements"
+msgstr "Множество небольших исправлений интерфейса и улучшений стабильности"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:214
+msgid "Improve the consistency of the cover art display"
+msgstr "Улучшена единообразность отображения обложек"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:215
+msgid "Make the behaviour of the playlist shuffle more predictable"
+msgstr "Поведение перемешивания плейлиста стало более предсказуемым"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:216
+msgid "Fix state transitions when opening a song from the file manager"
+msgstr ""
+"Исправлены переходы состояния при открытии песни из файлового менеджера"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:217
+msgid "Indicate the currently playing song in the playlist"
+msgstr "Текущая песня теперь отмечена в плейлисте"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:218
+msgid "Improve the styling of the waveform scrubber"
+msgstr "Улучшено оформление ползунка осциллограммы"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:227
+msgid "Fix drag and drop on the initial landing page"
+msgstr "Исправлено перетаскивание на начальной странице"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:233
+msgid "Another round of small, papercut issue fixes"
+msgstr "Ещё один раунд исправлений мелких проблем"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:235
+msgid "Accessibility fixes all across the board"
+msgstr "Исправления доступности во всех разделах"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:236
+msgid "Better key navigation and shortcuts"
+msgstr "Улучшена навигация с клавиатуры и комбинации клавиш"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:237
+msgid "Improve the consistency of the UI"
+msgstr "Улучшена единообразность интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:238
+msgid "Speed up the song loading"
+msgstr "Ускорена загрузка песен"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:244
+msgid "Papercut fixes for the initial landing page and the playlist"
+msgstr "Исправлены мелкие проблемы начальной страницы и плейлиста"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:246
+msgid "Fix styling of the folded playlist"
+msgstr "Исправлено оформление свёрнутого плейлиста"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:247
+msgid "Improve the cover art detection"
+msgstr "Улучшено определение обложек"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:248
+#: data/io.bassi.Amberol.metainfo.xml.in.in:257
+msgid "Add localization for various languages"
+msgstr "Добавлена локализация для разных языков"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:254
+msgid "New round of UI touch-ups, to make Amberol more readable."
+msgstr "Новый раунд доработок интерфейса для лучшей читаемости Amberol."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:256
+msgid "Improve the playlist management through a selection mode switch"
+msgstr "Улучшено управление плейлистом с помощью режима выбора"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:258
+msgid "Make the text and controls more legible"
+msgstr "Текст и элементы управления стали читаемее"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:259
+msgid "Improve the MPRIS integration"
+msgstr "Улучшена интеграция с MPRIS"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:260
+msgid "Better support for right-to-left text locales"
+msgstr "Улучшена поддержка языков с письмом справа налево"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:261
+msgid "Allow disabling UI recoloring"
+msgstr "Можно отключить перекрашивание интерфейса"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:267
+msgid "Last UI change for a while, I promise."
+msgstr "Последнее изменение интерфейса на какое-то время, обещаю."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:269
+msgid "Move the playlist panel to the left"
+msgstr "Панель плейлиста перемещена влево"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:270
+msgid "Drop the seek buttons"
+msgstr "Убраны кнопки перемотки"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:271
+msgid "Improve the rendering of the waveform"
+msgstr "Улучшено отображение осциллограммы"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:272
+msgid "Improve extraction of the song metadata"
+msgstr "Улучшено извлечение метаданных песен"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:274
+msgid "Thanks to everyone who tried Amberol and filed issues!"
+msgstr "Спасибо всем, кто попробовал Amberol и сообщил о проблемах!"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:279
+msgid "Bugs never end, and so does bug squashing."
+msgstr "Ошибки не заканчиваются, и их исправление тоже."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:281
+msgid "Fix a crash when manually advancing through the playlist"
+msgstr "Исправлено падение при ручном переключении песен в плейлисте"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:282
+msgid "Make the waveform scrubber more legible"
+msgstr "Ползунок осциллограммы стал заметнее"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:283
+msgid "Keep the UI state more consistent when toggling the playlist"
+msgstr ""
+"Состояние интерфейса остаётся более согласованным при переключении плейлиста"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:285
+msgid ""
+"Many, many thanks to all of those who opened an issue after the 0.4.0 "
+"release!"
+msgstr "Огромное спасибо всем, кто сообщил о проблемах после выпуска 0.4.0!"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:290
+msgid "Fix a slight visual artefact in the playlist"
+msgstr "Исправлен небольшой визуальный артефакт в плейлисте"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:295
+msgid "A brown paper bag release fixing an embarrassing bug."
+msgstr "Экстренный выпуск с исправлением неловкой ошибки."
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:300
+msgid "The first beta release for Amberol! Isn't this exciting?"
+msgstr "Первая бета-версия Amberol! Разве это не здорово?"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:302
+msgid "Show an initial page when launching Amberol"
+msgstr "При запуске Amberol показывается начальная страница"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:303
+msgid "Make the layout more mobile friendly without impacting desktop users"
+msgstr "Макет стал удобнее для мобильных устройств без ущерба для настольных"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:304
+msgid "Allow removing songs from the playlist"
+msgstr "Добавлена возможность удалять песни из плейлиста"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:305
+msgid ""
+"Add initial (experimental) support for recursive loading of music folders"
+msgstr ""
+"Добавлена начальная (экспериментальная) поддержка рекурсивной загрузки папок "
+"с музыкой"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:306
+msgid "Show the cover art for music tracks in the playlist"
+msgstr "В плейлисте показываются обложки песен"
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:307
+msgid "Show the current position inside the song"
+msgstr "Показывается текущая позиция в песне"
+
+#: src/gtk/album-tile.blp:70 src/gtk/album-tile.blp:78 src/album_tile.rs:281
+msgid "Show artist"
+msgstr "Показать исполнителя"
+
+#: src/gtk/library-view.blp:15
+msgid "Back"
+msgstr "Назад"
+
+#: src/gtk/library-view.blp:33 src/gtk/library-view.blp:138
+#: src/gtk/library-view.blp:316 src/library_view.rs:819
+msgid "Recent Albums"
+msgstr "Недавние альбомы"
+
+#: src/gtk/library-view.blp:56 src/gtk/library-view.blp:61
+msgid "Search albums and artists"
+msgstr "Поиск альбомов и исполнителей"
+
+#: src/gtk/library-view.blp:72
+msgid "Library Menu"
+msgstr "Меню библиотеки"
+
+#: src/gtk/library-view.blp:83
+msgid "Play Albums"
+msgstr "Воспроизвести альбомы"
+
+#: src/gtk/library-view.blp:90
+msgid "Play albums"
+msgstr "Воспроизвести альбомы"
+
+#: src/gtk/library-view.blp:150
+msgctxt "a11y"
+msgid "Recent albums"
+msgstr "Недавние альбомы"
+
+#: src/gtk/library-view.blp:156 src/gtk/library-view.blp:321
+#: src/library_view.rs:814
+msgid "Random Albums"
+msgstr "Случайные альбомы"
+
+#: src/gtk/library-view.blp:168
+msgctxt "a11y"
+msgid "Random albums"
+msgstr "Случайные альбомы"
+
+#: src/gtk/library-view.blp:174 src/gtk/library-view.blp:326
+#: src/library_view.rs:835
+msgid "Favorite Albums"
+msgstr "Избранные альбомы"
+
+#: src/gtk/library-view.blp:186
+msgctxt "a11y"
+msgid "Favorite albums"
+msgstr "Избранные альбомы"
+
+#: src/gtk/library-view.blp:196
+msgid "Search Albums"
+msgstr "Поиск альбомов"
+
+#: src/gtk/library-view.blp:208
+msgctxt "a11y"
+msgid "Search albums"
+msgstr "Поиск альбомов"
+
+#: src/gtk/library-view.blp:246
+msgid "Indexing Your Music"
+msgstr "Индексация музыки"
+
+#: src/gtk/library-view.blp:247
+msgid ""
+"Amberol is reading the metadata of your music files. This only happens once; "
+"new tracks are added automatically."
+msgstr ""
+"Amberol читает метаданные ваших музыкальных файлов. Это происходит только "
+"один раз; новые треки добавляются автоматически."
+
+#: src/gtk/library-view.blp:262
+msgid "Your Library Is Empty"
+msgstr "Ваша библиотека пуста"
+
+#: src/gtk/library-view.blp:263
+msgid ""
+"Choose the folder where your music is stored. Amberol will index it and keep "
+"the index up to date without changing your files."
+msgstr ""
+"Выберите папку с музыкой. Amberol проиндексирует её и будет поддерживать "
+"индекс в актуальном состоянии, не изменяя ваши файлы."
+
+#: src/gtk/library-view.blp:266 src/gtk/library-view.blp:333 src/window.rs:1207
+msgid "Choose Music Folder"
+msgstr "Выбрать папку с музыкой"
+
+#: src/gtk/library-view.blp:283
+msgid "No Albums Found"
+msgstr "Альбомы не найдены"
+
+#: src/gtk/library-view.blp:284
+msgid "Try a different album or artist name."
+msgstr "Попробуйте другое название альбома или имя исполнителя."
+
+#: src/gtk/library-view.blp:293
+msgid "Your Favorites Are Empty"
+msgstr "Избранный список пуст"
+
+#: src/gtk/library-view.blp:294
+msgid ""
+"Mark albums with the star in the playlist and in the album context menu, and "
+"they will appear here."
+msgstr ""
+"Отмечайте альбомы звёздочкой в списке воспроизведения и в контекстном меню, "
+"и они появятся здесь."
+
+#: src/gtk/library-view.blp:297
+msgid "Browse Recent Albums"
+msgstr "Перейти к недавним альбомам"
+
+#: src/gtk/library-view.blp:338
+msgid "Rescan Library"
+msgstr "Пересканировать библиотеку"
+
+#: src/gtk/library-view.blp:345
+msgid "Now Playing"
+msgstr "Сейчас воспроизводится"
 
 #: src/gtk/playback-control.blp:21
 msgid "Play the Previous Song"
@@ -114,14 +676,17 @@ msgctxt "a11y"
 msgid "Toggle playlist"
 msgstr "Показать/Убрать список воспроизведения"
 
-#: src/gtk/playback-control.blp:94
-msgid "Shuffle the Playlist"
-msgstr "Перемешать список воспроизведения"
+#: src/gtk/playback-control.blp:94 src/gtk/queue-row.blp:85
+#: src/gtk/queue-row.blp:167 src/album_tile.rs:338 src/queue_row.rs:295
+#: src/queue_row.rs:426 src/window.rs:1294 src/window.rs:1317
+msgid "Add to Favorites"
+msgstr "Добавить в избранное"
 
-#: src/gtk/playback-control.blp:97
+#: src/gtk/playback-control.blp:97 src/gtk/queue-row.blp:93
+#: src/gtk/queue-row.blp:175
 msgctxt "a11y"
-msgid "Shuffle"
-msgstr "В случайном порядке"
+msgid "Toggle favorite"
+msgstr "Переключить избранное"
 
 #: src/gtk/playback-control.blp:116
 msgid "Enable Repeat"
@@ -141,62 +706,78 @@ msgctxt "a11y"
 msgid "Primary menu"
 msgstr "Главное меню"
 
-#: src/gtk/playback-control.blp:152
+#: src/gtk/playback-control.blp:163
+msgid "Track information"
+msgstr "Информация о треке"
+
+#: src/gtk/playback-control.blp:173
 msgid "Copy"
 msgstr "Копировать"
 
-#: src/gtk/playback-control.blp:157
-msgid "Open Directory"
-msgstr "Открыть каталог"
+#: src/gtk/playback-control.blp:185 src/gtk/window.blp:77
+msgid "Music Library"
+msgstr "Музыкальная библиотека"
 
-#: src/gtk/playback-control.blp:164
+#: src/gtk/playback-control.blp:192
 msgid "Add _Song"
 msgstr "Добавить _песню"
 
-#: src/gtk/playback-control.blp:169
+#: src/gtk/playback-control.blp:197
 msgid "Add _Folder"
 msgstr "Добавить _папку"
 
-#: src/gtk/playback-control.blp:174
+#: src/gtk/playback-control.blp:202
 msgid "Clear"
 msgstr "Очистить"
 
-#: src/gtk/playback-control.blp:181
-msgid "_Match Cover Art"
-msgstr "_Соответствовать обложке"
+#: src/gtk/playback-control.blp:207
+msgid "Restore Session"
+msgstr "Восстанавливать сессию"
 
-#: src/gtk/playback-control.blp:186
+#: src/gtk/playback-control.blp:214
+msgid "_Cover Art Gradient"
+msgstr "_Градиент обложки"
+
+#: src/gtk/playback-control.blp:219
 msgid "_Background Playback"
 msgstr "_Фоновое воспроизведение"
 
-#: src/gtk/playback-control.blp:193
+#: src/gtk/playback-control.blp:224
+msgid "Show Track _Information"
+msgstr "Показывать _информацию о треке"
+
+#: src/gtk/playback-control.blp:231
 msgid "_ReplayGain"
 msgstr "_Выравнивание громкости"
 
-#: src/gtk/playback-control.blp:196
+#: src/gtk/playback-control.blp:234
 msgctxt "replaygain-menu"
 msgid "_Album"
 msgstr "_Альбом"
 
-#: src/gtk/playback-control.blp:202
+#: src/gtk/playback-control.blp:240
 msgctxt "replaygain-menu"
 msgid "_Song"
 msgstr "_Песня"
 
-#: src/gtk/playback-control.blp:208
+#: src/gtk/playback-control.blp:246
 msgctxt "replaygain-menu"
 msgid "_Disabled"
 msgstr "_Отключено"
 
-#: src/gtk/playback-control.blp:217
+#: src/gtk/playback-control.blp:253
+msgid "_Reset Database"
+msgstr "_Сбросить базу данных"
+
+#: src/gtk/playback-control.blp:258
 msgid "_Keyboard Shortcuts"
 msgstr "_Комбинации клавиш"
 
-#: src/gtk/playback-control.blp:222
+#: src/gtk/playback-control.blp:260
 msgid "_About Amberol"
 msgstr "_О приложении"
 
-#: src/gtk/playback-control.blp:227
+#: src/gtk/playback-control.blp:265
 msgid "_Quit"
 msgstr "_Закрыть"
 
@@ -212,29 +793,25 @@ msgstr "Список воспроизведения"
 msgid "Close the Playlist"
 msgstr "Закрыть список воспроизведения"
 
-#: src/gtk/playlist-view.blp:55
-msgid "Select Songs in the Playlist"
-msgstr "Выбрать песни в списке воспроизведения"
-
-#: src/gtk/playlist-view.blp:62
+#: src/gtk/playlist-view.blp:54
 msgid "Search songs"
 msgstr "Поиск песен"
 
-#: src/gtk/playlist-view.blp:66
+#: src/gtk/playlist-view.blp:58
 msgctxt "a11y"
 msgid "Search"
 msgstr "Поиск"
 
-#: src/gtk/playlist-view.blp:67
+#: src/gtk/playlist-view.blp:59
 msgctxt "a11y"
 msgid "Type to search songs"
 msgstr "Введите текст для поиска песен"
 
-#: src/gtk/playlist-view.blp:110
+#: src/gtk/playlist-view.blp:105
 msgid "Select All Songs"
 msgstr "Выбрать все песни"
 
-#: src/gtk/playlist-view.blp:123
+#: src/gtk/playlist-view.blp:118
 msgid "Remove Selected Songs"
 msgstr "Удалить выбранные песни"
 
@@ -243,97 +820,97 @@ msgctxt "a11y"
 msgid "No cover available"
 msgstr "Обложка недоступна"
 
-#: src/gtk/queue-row.blp:81
+#: src/gtk/queue-row.blp:105
 msgctxt "a11y"
 msgid "Currently playing"
 msgstr "Текущее воспроизведение"
 
-#: src/gtk/shortcuts-dialog.blp:10
+#: src/gtk/shortcuts-dialog.blp:9
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Общие"
 
-#: src/gtk/shortcuts-dialog.blp:13
+#: src/gtk/shortcuts-dialog.blp:12
 msgctxt "shortcut window"
 msgid "Toggle primary menu"
 msgstr "Показать/Убрать главное меню"
 
-#: src/gtk/shortcuts-dialog.blp:18
+#: src/gtk/shortcuts-dialog.blp:17
 msgctxt "shortcut window"
 msgid "Copy song details to the clipboard"
 msgstr "Копировать сведения о песне в буфер обмена"
 
-#: src/gtk/shortcuts-dialog.blp:23
+#: src/gtk/shortcuts-dialog.blp:22
 msgctxt "shortcut window"
 msgid "Show shortcuts"
 msgstr "Показать комбинации клавиш"
 
-#: src/gtk/shortcuts-dialog.blp:28
+#: src/gtk/shortcuts-dialog.blp:27
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Закрыть"
 
-#: src/gtk/shortcuts-dialog.blp:34
+#: src/gtk/shortcuts-dialog.blp:33
 msgctxt "shortcut window"
 msgid "Playlist"
 msgstr "Список воспроизведения"
 
-#: src/gtk/shortcuts-dialog.blp:37
+#: src/gtk/shortcuts-dialog.blp:36
 msgctxt "shortcut window"
 msgid "Add a song to the playlist"
 msgstr "Добавить песню в список воспроизведения"
 
-#: src/gtk/shortcuts-dialog.blp:42
+#: src/gtk/shortcuts-dialog.blp:41
 msgctxt "shortcut window"
 msgid "Add a folder to the playlist"
 msgstr "Добавить папку в список воспроизведения"
 
-#: src/gtk/shortcuts-dialog.blp:47
+#: src/gtk/shortcuts-dialog.blp:46
 msgctxt "shortcut window"
 msgid "Clear the playlist"
 msgstr "Очистить список воспроизведения"
 
-#: src/gtk/shortcuts-dialog.blp:52
+#: src/gtk/shortcuts-dialog.blp:51
 msgctxt "shortcut window"
 msgid "Toggle the playlist pane"
 msgstr "Показать/Убрать панель списка воспроизведения"
 
-#: src/gtk/shortcuts-dialog.blp:57
+#: src/gtk/shortcuts-dialog.blp:56
 msgctxt "shortcut window"
 msgid "Search the playlist"
 msgstr "Поиск по списку воспроизведения"
 
-#: src/gtk/shortcuts-dialog.blp:62
+#: src/gtk/shortcuts-dialog.blp:61
 msgctxt "shortcut window"
 msgid "Toggle shuffling songs"
 msgstr "Переключение перемешивания песен"
 
-#: src/gtk/shortcuts-dialog.blp:68
+#: src/gtk/shortcuts-dialog.blp:67
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Воспроизведение"
 
-#: src/gtk/shortcuts-dialog.blp:71
+#: src/gtk/shortcuts-dialog.blp:70
 msgctxt "shortcut window"
 msgid "Toggle play/pause"
 msgstr "Переключение воспроизведения/паузы"
 
-#: src/gtk/shortcuts-dialog.blp:76
+#: src/gtk/shortcuts-dialog.blp:75
 msgctxt "shortcut window"
 msgid "Previous song"
 msgstr "Предыдущая песня"
 
-#: src/gtk/shortcuts-dialog.blp:81
+#: src/gtk/shortcuts-dialog.blp:80
 msgctxt "shortcut window"
 msgid "Next song"
 msgstr "Следующая песня"
 
-#: src/gtk/shortcuts-dialog.blp:86
+#: src/gtk/shortcuts-dialog.blp:85
 msgctxt "shortcut window"
 msgid "Seek backwards in the current song"
 msgstr "Перемотка назад в текущей песне"
 
-#: src/gtk/shortcuts-dialog.blp:91
+#: src/gtk/shortcuts-dialog.blp:90
 msgctxt "shortcut window"
 msgid "Seek forward in the current song"
 msgstr "Перемотка вперед в текущей песне"
@@ -342,42 +919,89 @@ msgstr "Перемотка вперед в текущей песне"
 msgid "Drop a song to add it to the playlist"
 msgstr "Перетащите песню, чтобы добавить ее в список воспроизведения"
 
-#: src/gtk/window.blp:39
+#: src/gtk/window.blp:40
 msgid ""
-"Select a file or a folder, or drag files from your file manager to the "
-"application window to add songs to the playlist"
+"Add a folder to your music library, or select songs and drag files from your "
+"file manager to add them to the playlist"
 msgstr ""
-"Выберите файл или папку, или перетащите файлы из файлового менеджера в окно "
-"приложения, чтобы добавить песни в список воспроизведения"
+"Добавьте папку в музыкальную библиотеку либо выберите песни и перетащите "
+"файлы из файлового менеджера, чтобы добавить их в список воспроизведения"
 
-#: src/gtk/window.blp:48
+#: src/gtk/window.blp:49
 msgid "Restore Playlist"
 msgstr "Восстановить список воспроизведения"
 
-#: src/gtk/window.blp:58
+#: src/gtk/window.blp:59
 msgid "Add Folder"
 msgstr "Добавить папку"
 
-#: src/gtk/window.blp:67
+#: src/gtk/window.blp:68
 msgid "Add Song"
 msgstr "Добавить песню"
 
-#: src/gtk/window.blp:128
+#: src/gtk/window.blp:106
+msgid "Open Music Library"
+msgstr "Открыть музыкальную библиотеку"
+
+#: src/gtk/window.blp:149
 msgctxt "a11y"
 msgid "Elapsed time"
 msgstr "Прошедшее время"
 
-#: src/gtk/window.blp:142
+#: src/gtk/window.blp:163
 msgctxt "a11y"
 msgid "Remaining time"
 msgstr "Оставшееся время"
 
+#: src/album.rs:128 src/audio/song.rs:424
+msgid "Unknown album"
+msgstr "Неизвестный альбом"
+
+#: src/album.rs:141 src/audio/song.rs:410
+msgid "Unknown artist"
+msgstr "Неизвестный исполнитель"
+
+#: src/album_tile.rs:312 src/queue_row.rs:408
+msgid "Play"
+msgstr "Воспроизвести"
+
+#: src/album_tile.rs:322 src/queue_row.rs:416
+msgid "Add to Queue"
+msgstr "Добавить в очередь"
+
+#: src/album_tile.rs:336 src/queue_row.rs:293 src/queue_row.rs:424
+#: src/window.rs:1314
+msgid "Remove from Favorites"
+msgstr "Удалить из избранного"
+
+#: src/album_tile.rs:352 src/queue_row.rs:445
+msgid "Play Next"
+msgstr "Играть следующим"
+
+#: src/album_tile.rs:388 src/queue_row.rs:437
+msgid "Delete from Device"
+msgstr "Удалить с устройства"
+
+#: src/album_tile.rs:409 src/queue_row.rs:468
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+#: src/album_tile.rs:418 src/album_tile.rs:419 src/queue_row.rs:477
+#: src/queue_row.rs:478
+msgid "Yes"
+msgstr "Да"
+
+#: src/album_tile.rs:424 src/album_tile.rs:425 src/queue_row.rs:483
+#: src/queue_row.rs:484
+msgid "No"
+msgstr "Нет"
+
 #. Translators: Replace "translator-credits" with your names, one name per line
-#: src/application.rs:243
+#: src/application.rs:270
 msgid "translator-credits"
 msgstr "Aleksandr Melman <alexmelman88@gmail.com>, 2022-2023"
 
-#: src/application.rs:255
+#: src/application.rs:282
 msgid "Amberol needs to run in the background to play music"
 msgstr "Amberol должен работать в фоновом режиме для воспроизведения музыки"
 
@@ -385,99 +1009,215 @@ msgstr "Amberol должен работать в фоновом режиме д�
 msgid "Playback in progress"
 msgstr "Идет воспроизведение"
 
-#: src/audio/song.rs:339
-msgid "Unknown artist"
-msgstr "Неизвестный исполнитель"
+#: src/audio/song.rs:78
+msgid "{} kbps"
+msgstr "{} кбит/с"
 
-#: src/audio/song.rs:346
+#: src/audio/song.rs:81
+msgid "{} bit"
+msgstr "{} бит"
+
+#: src/audio/song.rs:89
+msgid "{} kHz"
+msgstr "{} кГц"
+
+#: src/audio/song.rs:417
 msgid "Unknown title"
 msgstr "Неизвестное название"
 
-#: src/audio/song.rs:353
-msgid "Unknown album"
-msgstr "Неизвестный альбом"
-
-#: src/cover_picture.rs:75
+#: src/cover_picture.rs:78
 msgid "Cover image"
 msgstr "Изображение обложки"
 
-#: src/playback_control.rs:115
+#: src/library_view.rs:573
+msgid "{} selected"
+msgid_plural "{} selected"
+msgstr[0] "{} выделен"
+msgstr[1] "{} выделено"
+msgstr[2] "{} выделено"
+
+#: src/library_view.rs:766
+msgid "{} track"
+msgid_plural "{} tracks"
+msgstr[0] "{} трек"
+msgstr[1] "{} трека"
+msgstr[2] "{} треков"
+
+#: src/library_view.rs:781
+msgid "Play Artist Albums"
+msgstr "Воспроизвести альбомы исполнителя"
+
+#: src/library_view.rs:794
+msgid "Search Results"
+msgstr "Результаты поиска"
+
+#: src/library_view.rs:797
+msgid "Play Search Results"
+msgstr "Воспроизвести результаты поиска"
+
+#: src/library_view.rs:817
+msgid "Play Random Albums"
+msgstr "Воспроизвести случайные альбомы"
+
+#: src/library_view.rs:822
+msgid "Play Recent Albums"
+msgstr "Воспроизвести недавние альбомы"
+
+#: src/library_view.rs:839
+msgid "Play Favorite Albums"
+msgstr "Воспроизвести избранные альбомы"
+
+#: src/library_view.rs:885
+msgid "{} album"
+msgid_plural "{} albums"
+msgstr[0] "{} альбом"
+msgstr[1] "{} альбома"
+msgstr[2] "{} альбомов"
+
+#: src/playback_control.rs:134
 msgid "Do Not Repeat"
 msgstr "Не повторять"
 
-#: src/playback_control.rs:119
+#: src/playback_control.rs:138
 msgid "Repeat All Songs"
 msgstr "Повторить все песни"
 
-#: src/playback_control.rs:123
+#: src/playback_control.rs:142
 msgid "Repeat the Current Song"
 msgstr "Повторить текущую песню"
 
-#: src/window.rs:149
+#: src/queue_row.rs:452
+msgid "Remove from Playlist"
+msgstr "Удалить из плейлиста"
+
+#: src/window.rs:202
 msgid "Audio files"
 msgstr "Аудиофайлы"
 
-#: src/window.rs:159
+#: src/window.rs:212
 msgid "_Add Song"
 msgstr "_Добавить песню"
 
-#: src/window.rs:163
+#: src/window.rs:216
 msgid "Open File"
 msgstr "Открыть файл"
 
-#: src/window.rs:168 src/window.rs:190 src/window.rs:1487
+#: src/window.rs:221 src/window.rs:243 src/window.rs:3484
 msgid "Unable to access files"
 msgstr "Невозможно получить доступ к файлам"
 
-#: src/window.rs:182
+#: src/window.rs:235
 msgid "_Add Folder"
 msgstr "_Добавить папку"
 
-#: src/window.rs:185
+#: src/window.rs:238
 msgid "Open Folder"
 msgstr "Открыть папку"
 
-#: src/window.rs:512
-msgid "No available song found"
-msgstr "Доступных песен не найдено"
+#: src/window.rs:783
+msgid "No albums found for this artist"
+msgstr "У этого исполнителя не найдено альбомов"
 
-#: src/window.rs:574
+#: src/window.rs:788 src/window.rs:867 src/window.rs:903 src/window.rs:934
+#: src/window.rs:1281
+msgid "Unable to load the music library"
+msgstr "Не удалось загрузить музыкальную библиотеку"
+
+#: src/window.rs:1037
+msgid "Choose a folder for your music library"
+msgstr "Выберите папку для музыкальной библиотеки"
+
+#: src/window.rs:1101
+msgid "Indexed {} song"
+msgid_plural "Indexed {} songs"
+msgstr[0] "Проиндексирована {} песня"
+msgstr[1] "Проиндексировано {} песни"
+msgstr[2] "Проиндексировано {} песен"
+
+#: src/window.rs:1115
+msgid "Unable to scan the music folder"
+msgstr "Не удалось просканировать папку с музыкой"
+
+#: src/window.rs:1204
+msgid "_Choose Folder"
+msgstr "_Выбрать папку"
+
+#: src/window.rs:1212
+msgid "Unable to access the selected folder"
+msgstr "Не удалось получить доступ к выбранной папке"
+
+#: src/window.rs:1260 src/window.rs:1447 src/window.rs:1578
+msgid "No songs found in this album"
+msgstr "В этом альбоме не найдено песен"
+
+#: src/window.rs:1263 src/window.rs:1452
+msgid "Unable to load album"
+msgstr "Не удалось загрузить альбом"
+
+#: src/window.rs:1278 src/window.rs:2202
 msgid "No songs found"
 msgstr "Песни не найдены"
 
-#: src/window.rs:607
-msgid "Added a new song"
-msgstr "Добавлена новая песня"
-
-#: src/window.rs:608
-msgid "Play"
-msgstr "Воспроизвести"
-
-#. Translators: the `{}` must be left unmodified;
-#. it will be expanded to the number of songs added
-#. to the playlist
-#: src/window.rs:617
-#, rust-format
+#: src/window.rs:1516
 msgid "Added one song"
 msgid_plural "Added {} songs"
 msgstr[0] "Добавлена {} песня"
 msgstr[1] "Добавлено {} песни"
 msgstr[2] "Добавлено {} песен"
 
-#: src/window.rs:1247
+#: src/window.rs:1545 src/window.rs:3451
+msgid "Will Play Next"
+msgstr "Будет воспроизведено следующим"
+
+#: src/window.rs:1573
+msgid "Unable to delete album"
+msgstr "Не удалось удалить альбом"
+
+#: src/window.rs:1602 src/window.rs:1660
+msgid "Some files could not be deleted"
+msgstr "Некоторые файлы не удалось удалить"
+
+#: src/window.rs:1604
+msgid "Album deleted from device"
+msgstr "Альбом удалён с устройства"
+
+#: src/window.rs:1618 src/window.rs:1626 src/window.rs:1632
+msgid "Unable to delete songs"
+msgstr "Не удалось удалить песни"
+
+#: src/window.rs:1662
+msgid "Songs deleted from device"
+msgstr "Песни удалены с устройства"
+
+#. ReplayGain is section 4; keep the album count right after it.
+#: src/window.rs:1848
+msgid "Album Count"
+msgstr "Количество альбомов"
+
+#: src/window.rs:1860
+msgid "Custom"
+msgstr "Своё количество"
+
+#: src/window.rs:1929 src/window.rs:1930
+msgid "Apply"
+msgstr "Применить"
+
+#: src/window.rs:2133
+msgid "No available song found"
+msgstr "Доступных песен не найдено"
+
+#: src/window.rs:3010
 msgid "Unable to access dropped files"
 msgstr "Невозможно получить доступ к сброшенным файлам"
 
-#: src/window.rs:1341
-#, rust-format
+#: src/window.rs:3105
 msgid "{} minute"
 msgid_plural "{} minutes"
 msgstr[0] "{} минута"
 msgstr[1] "{} минуты"
 msgstr[2] "{} минут"
 
-#: src/window.rs:1352
-#, rust-format
+#: src/window.rs:3116
 msgid "{hours} hour {minutes} remaining"
 msgid_plural "{hours} hours {minutes} remaining"
 msgstr[0] "Остался {hours} час {minutes}"
@@ -487,109 +1227,220 @@ msgstr[2] "Осталось {hours} часов {minutes}"
 #. Translators: the '{}' must be left unmodified, and
 #. it will be replaced by the number of minutes remaining
 #. in the playlist
-#: src/window.rs:1362
-#, rust-format
+#: src/window.rs:3126
 msgid "{} minute remaining"
 msgid_plural "{} minutes remaining"
 msgstr[0] "Осталась {} минута"
 msgstr[1] "Осталось {} минуты"
 msgstr[2] "Осталось {} минут"
 
-#: src/window.rs:1466
+#: src/window.rs:3230
 msgid "No song selected"
 msgstr "Не выбрана ни одна песня"
 
 #. Translators: The '{}' must be left unmodified, and
 #. it is expanded to the number of songs selected
-#: src/window.rs:1471
-#, rust-format
+#: src/window.rs:3235
 msgid "{} song selected"
 msgid_plural "{} songs selected"
 msgstr[0] "Выбрана {} песня"
 msgstr[1] "Выбрано {} песни"
 msgstr[2] "Выбрано {} песен"
 
+#: src/window.rs:3533
+msgid "Added a new song"
+msgstr "Добавлена новая песня"
+
+#: src/window.rs:3535
+msgid "Added new songs"
+msgstr "Добавлены новые песни"
+
 #. Translators: `{title}` and `{artist}` must be left
 #. untranslated; they will expand to the title and
 #. artist of the currently playing song, respectively
-#: src/window.rs:1527
-#, rust-format
+#: src/window.rs:3552
 msgid "Currently playing “{title}” by “{artist}”"
 msgstr "Сейчас играет \"{title}\" от \"{artist}\""
 
-#: src/window.rs:1564
+#: src/window.rs:3589
 msgid "Unable to open folder"
 msgstr "Невозможно открыть папку"
 
-#~ msgid "_Cancel"
-#~ msgstr "_Отменить"
+#: src/window.rs:2159
+msgid "Reset Database"
+msgstr "Сбросить базу данных"
 
-#~ msgid "_Track"
-#~ msgstr "_Дорожка"
+#: src/window.rs:2160
+msgid ""
+"This will delete the music library index, favorites, saved session and all "
+"cached artwork. This cannot be undone."
+msgstr ""
+"Будут удалены индекс музыкальной библиотеки, избранное, сохранённый сеанс и "
+"все кэшированные обложки. Это действие нельзя отменить."
 
-#~ msgid "_Off"
-#~ msgstr "_Выключить"
+#: src/window.rs:2164
+msgid "Cancel"
+msgstr "Отмена"
 
-#~ msgid "Repeat All Tracks"
-#~ msgstr "Повторить все дорожки"
+#: src/window.rs:2165
+msgid "Reset"
+msgstr "Сбросить"
 
-#~ msgid "Add File"
-#~ msgstr "Добавить файл"
+#: src/window.rs:2204
+msgid "Unable to reset the database"
+msgstr "Не удалось сбросить базу данных"
 
-#~ msgid "Plays music and nothing else"
-#~ msgstr "Воспроизводит музыку и ничего больше"
+#: src/window.rs:2232
+msgid "Database and caches have been reset"
+msgstr "База данных и кэши сброшены"
 
-#~ msgid "Amberol cannot run in the background"
-#~ msgstr "Amberol не может работать в фоновом режиме"
+#: src/window.rs:1346
+msgid "Preparing Your Music Library"
+msgstr "Подготовка музыкальной библиотеки"
 
-#~ msgid "{} hour"
-#~ msgid_plural "{} hours"
-#~ msgstr[0] "{} час"
-#~ msgstr[1] "{} часа"
-#~ msgstr[2] "{} часов"
+#: src/window.rs:1349
+msgid ""
+"Amberol is scanning your music folder and preparing cover artwork. This only "
+"happens the first time."
+msgstr ""
+"Amberol сканирует папку с музыкой и подготавливает обложки. Это происходит "
+"только при первом добавлении папки."
 
-#~ msgid "“{}” is not a supported audio file"
-#~ msgstr "\"{}\" не является поддерживаемым аудиофайлом"
+#: src/window.rs:1361
+msgid "Scanning…"
+msgstr "Сканирование…"
 
-#~ msgid "Unrecognized file type for “{}”"
-#~ msgstr "Нераспознанный тип файла для \"{}\""
+#: src/window.rs:0
+msgid "Change Cover…"
+msgstr "Изменить обложку…"
 
-#~ msgid "Amberol is running in the background"
-#~ msgstr "Amberol работает в фоновом режиме"
+#: src/window.rs:0
+msgid "Remove Cover"
+msgstr "Удалить обложку"
 
-#~ msgid "Playing next"
-#~ msgstr "Играет следующим"
+#: src/window.rs:0
+msgid "Image files"
+msgstr "Изображения"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Songs Queue"
-#~ msgstr "Очередь песен"
+#: src/window.rs:0
+msgid "_Select"
+msgstr "_Выбрать"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Queue a Song"
-#~ msgstr "Поставить песню в очередь"
+#: src/window.rs:0
+msgid "Choose Cover Image"
+msgstr "Выбор изображения обложки"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Queue a Folder"
-#~ msgstr "Поставить папку в очередь"
+#: src/window.rs:0
+msgid "Unable to load image"
+msgstr "Не удалось загрузить изображение"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Clear"
-#~ msgstr "Очистить"
+#: src/window.rs:0
+msgid "Apply Cover"
+msgstr "Применение обложки"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Previous Track"
-#~ msgstr "Предыдущая дорожка"
+#: src/window.rs:0
+msgid "Where should the new cover be used?"
+msgstr "Где использовать новую обложку?"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Seek Backwards"
-#~ msgstr "Перемотка назад"
+#: src/window.rs:0
+msgid "One Song"
+msgstr "Одна песня"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Seek Forward"
-#~ msgstr "Перемотка вперед"
+#: src/window.rs:0
+msgid "Entire Album"
+msgstr "Весь альбом"
 
-#~ msgid "Show the playlist"
-#~ msgstr "Показать список воспроизведения"
+#: src/window.rs:0
+msgid "Compress Cover"
+msgstr "Сжать обложку"
 
-#~ msgid "Choose a folder"
-#~ msgstr "Выбрать папку"
+#: src/window.rs:0
+msgid ""
+"The selected image is {} pixels. Compress it to an 800×800 JPEG of about "
+"100 KB? Choosing “Use Original” keeps the file untouched."
+msgstr ""
+"Выбранное изображение: {} пикселей. Сжать его в JPEG 800×800 примерно 100 "
+"КБ? Выбор «Использовать оригинал» оставляет файл без изменений."
+
+#: src/window.rs:0
+msgid "Compress"
+msgstr "Сжать"
+
+#: src/window.rs:0
+msgid "Use Original"
+msgstr "Использовать оригинал"
+
+#: src/window.rs:0
+msgid "Unable to compress the image"
+msgstr "Не удалось сжать изображение"
+
+#: src/window.rs:0
+msgid "Unable to save the cover"
+msgstr "Не удалось сохранить обложку"
+
+#: src/window.rs:0
+msgid "Unable to remove the cover"
+msgstr "Не удалось удалить обложку"
+
+#: src/window.rs:0
+msgid "Remove from Song"
+msgstr "Удалить на песне"
+
+#: src/window.rs:0
+msgid "Remove from Entire Album"
+msgstr "Удалить по всему альбому"
+
+#: src/window.rs:0
+msgid ""
+"Hide the artwork for this song only, or for the whole album? The cover will "
+"be removed from the audio file tags; audio data is not changed."
+msgstr ""
+"Скрыть обложку только для этой песни или для всего альбома? Обложка будет "
+"удалена из метаданных аудиофайла; сами аудиоданные не изменятся."
+
+#: src/window.rs:0
+msgid "Unable to update the audio file tags"
+msgstr "Не удалось обновить метаданные аудиофайла"
+
+#: src/window.rs:0
+msgid "Save Cover"
+msgstr "Сохранить обложку"
+
+#: src/window.rs:0
+msgid "_Save"
+msgstr "_Сохранить"
+
+#: src/window.rs:0
+msgid "PNG and JPEG images"
+msgstr "Изображения PNG и JPEG"
+
+#: src/window.rs:0
+msgid "No cover art found"
+msgstr "Обложка не найдена"
+
+#: src/window.rs:0
+msgid "Unable to save the cover image"
+msgstr "Не удалось сохранить изображение обложки"
+
+#: src/window.rs:0
+msgid "Cover information…"
+msgstr "Сведения об обложке…"
+
+#: src/window.rs:0
+msgid "Cover information unavailable"
+msgstr "Сведения об обложке недоступны"
+
+#: src/window.rs:0
+msgid "{} KB"
+msgstr "{} КБ"
+
+#: src/window.rs:0
+msgid "{} MB"
+msgstr "{} МБ"
+
+#: src/window.rs:0
+msgid "{}×{} · {} · {}"
+msgstr "{}×{} · {} · {}"
+
+#~ msgid "Select Songs in the Playlist"
+#~ msgstr "Выбрать песни в списке воспроизведения"

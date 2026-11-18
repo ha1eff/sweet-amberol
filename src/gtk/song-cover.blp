@@ -8,26 +8,52 @@ template $AmberolSongCover: Widget {
     halign: center;
     valign: center;
 
-    Stack cover_stack {
-      StackPage {
-        name: "no-image";
+    Overlay cover_overlay {
+      child: Stack cover_stack {
+        StackPage {
+          name: "no-image";
 
-        child: Image {
-          overflow: hidden;
-          icon-name: "folder-music-symbolic";
-          pixel-size: 64;
+          child: Image {
+            overflow: hidden;
+            icon-name: "folder-music-symbolic";
+            pixel-size: 64;
+
+            styles [
+              "card",
+              "dim-label",
+            ]
+          };
+        }
+
+        StackPage {
+          name: "cover-image";
+
+          child: $AmberolCoverPicture album_image {};
+        }
+      };
+
+      [overlay]
+      Revealer cover_button_revealer {
+        transition-type: crossfade;
+        transition-duration: 150;
+        halign: end;
+        valign: start;
+        margin-top: 14;
+        margin-end: 14;
+
+        child: ToggleButton expand_button {
+          icon-name: "view-fullscreen-symbolic";
+          tooltip-text: _("Enlarge Cover");
 
           styles [
-            "card",
-            "dim-label",
+            "circular",
+            "osd",
           ]
+
+          accessibility {
+            label: C_("a11y", "Enlarge cover");
+          }
         };
-      }
-
-      StackPage {
-        name: "cover-image";
-
-        child: $AmberolCoverPicture album_image {};
       }
     }
   }

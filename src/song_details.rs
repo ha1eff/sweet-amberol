@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use adw::subclass::prelude::*;
+use glib::closure_local;
 use gtk::{glib, prelude::*, CompositeTemplate};
+use once_cell::sync::Lazy;
 
-use crate::marquee::Marquee;
+use crate::{marquee::Marquee, utils};
 
 mod imp {
     use super::*;
@@ -41,6 +43,35 @@ mod imp {
     }
 
     impl ObjectImpl for SongDetails {
+        fn constructed(&self) {
+            self.parent_constructed();
+
+            let obj = self.obj();
+            self.song_artist_label.get().connect_closure(
+                "link-activated",
+                false,
+                closure_local!(
+                    #[weak]
+                    obj,
+                    move |_: crate::marquee::Marquee, uri: String| {
+                        if let Some(artist) = utils::artist_from_link(&uri) {
+                            obj.emit_by_name::<()>("artist-activated", &[&artist]);
+                        }
+                    }
+                ),
+            );
+            self.song_artist_label.set_cursor_from_name(Some("pointer"));
+        }
+
+        fn signals() -> &'static [glib::subclass::Signal] {
+            static SIGNALS: Lazy<Vec<glib::subclass::Signal>> = Lazy::new(|| {
+                vec![glib::subclass::Signal::builder("artist-activated")
+                    .param_types([String::static_type()])
+                    .build()]
+            });
+            SIGNALS.as_ref()
+        }
+
         fn dispose(&self) {
             while let Some(child) = self.obj().first_child() {
                 child.unparent();
@@ -70,6 +101,11 @@ impl SongDetails {
 
     pub fn artist_label(&self) -> Marquee {
         self.imp().song_artist_label.get()
+    }
+
+    /// Shows `markup`, in which each artist is a separate link.
+    pub fn set_artist_markup(&self, markup: &str) {
+        self.imp().song_artist_label.set_markup(markup);
     }
 
     pub fn title_label(&self) -> Marquee {

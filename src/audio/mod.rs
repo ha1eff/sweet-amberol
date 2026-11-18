@@ -41,7 +41,7 @@ mod controller;
 pub use controller::Controller;
 
 mod cover_cache;
-pub use cover_cache::CoverCache;
+pub use cover_cache::{clear_thumbnail_cache, forget_thumbnail, CoverCache};
 
 mod inhibit_controller;
 mod mpris_controller;
@@ -50,6 +50,9 @@ pub use mpris_controller::MprisController;
 
 mod gst_backend;
 pub use gst_backend::GstBackend;
+
+mod memory;
+pub use memory::reclaim;
 
 mod player;
 mod queue;
@@ -64,5 +67,6 @@ pub use player::{
 pub use queue::Queue;
 pub use shuffle::ShuffleListModel;
 pub use song::Song;
+pub mod tag_writer;
 pub use state::PlayerState;
 pub use waveform_generator::WaveformGenerator;

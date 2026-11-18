@@ -1,0 +1,94 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2026 Amberol contributors
+
+using Gtk 4.0;
+
+template $AmberolAlbumTile: Widget {
+  Box {
+    orientation: vertical;
+    spacing: 4;
+    width-request: 200;
+    halign: center;
+
+    Stack cover_stack {
+      width-request: 200;
+      height-request: 200;
+      halign: center;
+
+      StackPage {
+        name: "no-cover";
+
+        child: Image {
+          icon-name: "folder-music-symbolic";
+          pixel-size: 64;
+          width-request: 200;
+          height-request: 200;
+
+          styles [
+            "dim-label",
+            "album-cover-placeholder",
+          ]
+        };
+      }
+
+      StackPage {
+        name: "cover";
+
+        child: $AmberolCoverPicture cover_picture {
+          cover-size: "2";
+          width-request: 200;
+          height-request: 200;
+          halign: center;
+          valign: center;
+
+          styles [
+            "album-cover",
+          ]
+        };
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      spacing: 0;
+      halign: fill;
+
+      Label title_label {
+        xalign: 0.5;
+        justify: center;
+        ellipsize: end;
+        max-width-chars: 26;
+
+        styles [
+          "album-title",
+        ]
+      }
+
+      Button artist_button {
+        halign: center;
+        has-frame: false;
+        tooltip-text: _("Show artist");
+
+        styles [
+          "flat",
+          "artist-link-button",
+        ]
+
+        accessibility {
+          label: _("Show artist");
+        }
+
+        child: Label artist_label {
+          xalign: 0.5;
+          justify: center;
+          ellipsize: end;
+          max-width-chars: 26;
+
+          styles [
+            "album-artist",
+          ]
+        };
+      }
+    }
+  }
+}

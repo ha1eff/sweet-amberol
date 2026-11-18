@@ -5,3 +5,8 @@ src/config.rs
 target
 
 subprojects/blueprint-compiler
+
+# Debug screenshots and locally built packages
+/*.png
+/dist/
+*~

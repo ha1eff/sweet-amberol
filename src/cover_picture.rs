@@ -14,6 +14,20 @@ pub enum CoverSize {
     #[default]
     Large = 0,
     Small = 1,
+    Album = 2,
+    Expanded = 3,
+}
+
+impl CoverSize {
+    /// Side of the square allocated to this cover size, in application pixels.
+    pub fn pixels(&self) -> i32 {
+        match self {
+            CoverSize::Large => 192,
+            CoverSize::Small => 48,
+            CoverSize::Album => 200,
+            CoverSize::Expanded => 250,
+        }
+    }
 }
 
 impl AsRef<str> for CoverSize {
@@ -21,6 +35,8 @@ impl AsRef<str> for CoverSize {
         match self {
             CoverSize::Large => "large",
             CoverSize::Small => "small",
+            CoverSize::Album => "album",
+            CoverSize::Expanded => "expanded",
         }
     }
 }
@@ -30,9 +46,6 @@ mod imp {
     use once_cell::sync::Lazy;
 
     use super::*;
-
-    const LARGE_SIZE: i32 = 192;
-    const SMALL_SIZE: i32 = 48;
 
     #[derive(Debug, Default)]
     pub struct CoverPicture {
@@ -112,41 +125,50 @@ mod imp {
         }
 
         fn measure(&self, _orientation: gtk::Orientation, _for_size: i32) -> (i32, i32, i32, i32) {
-            match self.cover_size.get() {
-                CoverSize::Large => (LARGE_SIZE, LARGE_SIZE, -1, -1),
-                CoverSize::Small => (SMALL_SIZE, SMALL_SIZE, -1, -1),
-            }
+            let size = self.cover_size.get().pixels();
+            (size, size, -1, -1)
         }
 
         fn snapshot(&self, snapshot: &gtk::Snapshot) {
             if let Some(ref cover) = *self.cover.borrow() {
                 let widget = self.obj();
-                let scale_factor = widget.scale_factor() as f64;
-                let width = widget.width() as f64 * scale_factor;
-                let height = widget.height() as f64 * scale_factor;
-                let ratio = cover.intrinsic_aspect_ratio();
-                let w;
-                let h;
-                if ratio > 1.0 {
-                    w = width;
-                    h = width / ratio;
-                } else {
-                    w = height * ratio;
-                    h = height;
+                let width = widget.width() as f32;
+                let height = widget.height() as f32;
+                if width <= 0.0 || height <= 0.0 {
+                    return;
                 }
 
-                let x = (width - w.ceil()) / 2.0;
-                let y = (height - h).floor() / 2.0;
+                let raw_ratio = cover.intrinsic_aspect_ratio() as f32;
+                let ratio = if raw_ratio.is_finite() && raw_ratio > 0.0 {
+                    raw_ratio
+                } else {
+                    1.0
+                };
 
+                // Always fill the square frame from its centre: scale the
+                // artwork uniformly until it covers the whole widget and let
+                // the clip discard the excess. A 1:1 photo is simply drawn
+                // square at 1:1, and no aspect ratio is ever stretched at the
+                // edges. This applies to the player, the queue and the grid.
+                let (w, h) = if ratio > 1.0 {
+                    (height * ratio, height)
+                } else {
+                    (width, width / ratio)
+                };
+
+                let x = (width - w) / 2.0;
+                let y = (height - h) / 2.0;
+
+                snapshot.push_clip(&graphene::Rect::new(0.0, 0.0, width, height));
                 snapshot.save();
-                snapshot.scale(1.0 / scale_factor as f32, 1.0 / scale_factor as f32);
-                snapshot.translate(&graphene::Point::new(x as f32, y as f32));
+                snapshot.translate(&graphene::Point::new(x, y));
                 snapshot.append_scaled_texture(
                     cover,
                     gsk::ScalingFilter::Trilinear,
-                    &graphene::Rect::new(0.0, 0.0, w as f32, h as f32),
+                    &graphene::Rect::new(0.0, 0.0, w, h),
                 );
                 snapshot.restore();
+                snapshot.pop();
             }
         }
     }

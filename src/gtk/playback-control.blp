@@ -87,14 +87,14 @@ template $AmberolPlaybackControl: Widget {
           }
         }
 
-        ToggleButton shuffle_button {
-          icon-name: "media-playlist-shuffle-symbolic";
-          action-name: "queue.shuffle";
+        Button favorite_button {
+          icon-name: "non-starred-symbolic";
+          action-name: "win.toggle-favorite";
           valign: center;
-          tooltip-text: _("Shuffle the Playlist");
+          tooltip-text: _("Add to Favorites");
 
           accessibility {
-            label: C_("a11y", "Shuffle");
+            label: C_("a11y", "Toggle favorite");
           }
 
           styles [
@@ -143,6 +143,27 @@ template $AmberolPlaybackControl: Widget {
         }
       }
     }
+
+    Label track_info_label {
+      wrap: true;
+      wrap-mode: word_char;
+      justify: center;
+      xalign: 0.5;
+      halign: fill;
+      width-request: 256;
+      margin-top: 6;
+
+      styles [
+        "caption",
+        "dim-label",
+        "track-info",
+      ]
+
+      accessibility {
+        label: _("Track information");
+      }
+    }
+
   }
 }
 
@@ -154,8 +175,15 @@ menu primary_menu {
     }
 
     item {
-      label: _("Open Directory");
+      label: _("Open Folder");
       action: "win.open-directory";
+    }
+  }
+
+  section {
+    item {
+      label: _("Music Library");
+      action: "win.show-library";
     }
   }
 
@@ -178,13 +206,23 @@ menu primary_menu {
 
   section {
     item {
-      label: _("_Match Cover Art");
-      action: "win.enable-recoloring";
+      label: _("Restore Session");
+      action: "win.restore-session";
     }
 
     item {
       label: _("_Background Playback");
       action: "app.background-play";
+    }
+
+    item {
+      label: _("Show Track _Information");
+      action: "win.show-track-info";
+    }
+
+    item {
+      label: _("_Cover Art Gradient");
+      action: "win.enable-recoloring";
     }
   }
 
@@ -213,6 +251,11 @@ menu primary_menu {
   }
 
   section {
+    item {
+      label: _("_Reset Database");
+      action: "win.reset-database";
+    }
+
     item {
       label: _("_Keyboard Shortcuts");
       action: "app.shortcuts";

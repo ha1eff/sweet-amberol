@@ -27,7 +27,12 @@ template $AmberolSongDetails: Widget {
 
         styles [
           "song-artist",
+          "artist-link",
         ]
+
+        accessibility {
+          label: _("Show artist");
+        }
       }
 
       $AmberolMarquee song_album_label {

@@ -9,11 +9,19 @@ template $AmberolPlaylistView: Widget {
     [top]
     Adw.HeaderBar {
       [start]
-      ToggleButton search_button {
-        icon-name: "system-search-symbolic";
-        action-name: "queue.search";
+      Button {
+        icon-name: "folder-music-symbolic";
+        action-name: "win.show-library";
         valign: center;
-        tooltip-text: _("Search Songs in the Playlist");
+        tooltip-text: _("Open Music Library");
+
+        styles [
+          "flat",
+        ]
+
+        accessibility {
+          label: _("Open Music Library");
+        }
       }
 
       title-widget: Box queue_length_box {
@@ -46,27 +54,6 @@ template $AmberolPlaylistView: Widget {
         valign: center;
         tooltip-text: _("Close the Playlist");
       }
-
-      [end]
-      ToggleButton select_button {
-        icon-name: "selection-mode-symbolic";
-        action-name: "queue.select";
-        valign: center;
-        tooltip-text: _("Select Songs in the Playlist");
-      }
-    }
-
-    [top]
-    SearchBar playlist_searchbar {
-      child: SearchEntry playlist_searchentry {
-        placeholder-text: _("Search songs");
-        hexpand: true;
-
-        accessibility {
-          label: C_("a11y", "Search");
-          description: C_("a11y", "Type to search songs");
-        }
-      };
     }
 
     content: Overlay playlist_overlay {
@@ -100,6 +87,9 @@ template $AmberolPlaylistView: Widget {
     [bottom]
     ActionBar queue_actionbar {
       revealed: false;
+      margin-start: 6;
+      margin-end: 6;
+      margin-bottom: 8;
 
       styles [
         "flat",
@@ -119,7 +109,7 @@ template $AmberolPlaylistView: Widget {
 
       [end]
       Button queue_remove_button {
-        icon-name: "app-remove-symbolic";
+        icon-name: "edit-clear-all-symbolic";
         tooltip-text: _("Remove Selected Songs");
       }
     }

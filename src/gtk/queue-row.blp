@@ -59,26 +59,54 @@ template $AmberolQueueRow: Widget {
             ]
           }
 
-          Inscription song_artist_label {
+          Label song_artist_label {
             xalign: 0;
-            text-overflow: ellipsize_end;
+            halign: start;
+            ellipsize: end;
+            tooltip-text: _("Show artist");
 
             styles [
               "song-artist",
+              "artist-link",
             ]
           }
         }
 
         [end]
-        Image song_playing_image {
-          icon-name: "audio-only-symbolic";
-          pixel-size: 16;
+        Box row_actions {
+          orientation: horizontal;
+          spacing: 2;
           halign: center;
           valign: center;
-          opacity: 0;
 
-          accessibility {
-            label: C_("a11y", "Currently playing");
+          Button favorite_button {
+            icon-name: "non-starred-symbolic";
+            halign: center;
+            valign: center;
+            width-request: 24;
+            height-request: 24;
+            tooltip-text: _("Add to Favorites");
+
+            styles [
+              "flat",
+              "favorite-star",
+            ]
+
+            accessibility {
+              label: C_("a11y", "Toggle favorite");
+            }
+          }
+
+          Image song_playing_image {
+            icon-name: "audio-only-symbolic";
+            pixel-size: 16;
+            halign: center;
+            valign: center;
+            opacity: 0;
+
+            accessibility {
+              label: C_("a11y", "Currently playing");
+            }
           }
         }
 
@@ -127,12 +155,37 @@ template $AmberolQueueRow: Widget {
         }
 
         [end]
-        Image selection_playing_image {
-          icon-name: "audio-only-symbolic";
-          pixel-size: 16;
+        Box selection_row_actions {
+          orientation: horizontal;
+          spacing: 2;
           halign: center;
           valign: center;
-          opacity: 0;
+
+          Button selection_favorite_button {
+            icon-name: "non-starred-symbolic";
+            halign: center;
+            valign: center;
+            width-request: 24;
+            height-request: 24;
+            tooltip-text: _("Add to Favorites");
+
+            styles [
+              "flat",
+              "favorite-star",
+            ]
+
+            accessibility {
+              label: C_("a11y", "Toggle favorite");
+            }
+          }
+
+          Image selection_playing_image {
+            icon-name: "audio-only-symbolic";
+            pixel-size: 16;
+            halign: center;
+            valign: center;
+            opacity: 0;
+          }
         }
 
         styles [

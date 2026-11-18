@@ -33,11 +33,14 @@ mod imp {
         #[template_child]
         pub playlist_button: TemplateChild<gtk::ToggleButton>,
         #[template_child]
-        pub shuffle_button: TemplateChild<gtk::ToggleButton>,
+        pub favorite_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub repeat_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub menu_button: TemplateChild<gtk::MenuButton>,
+
+        #[template_child]
+        pub track_info_label: TemplateChild<gtk::Label>,
     }
 
     #[glib::object_subclass]
@@ -103,8 +106,24 @@ impl PlaybackControl {
         self.imp().repeat_button.get()
     }
 
+    pub fn favorite_button(&self) -> gtk::Button {
+        self.imp().favorite_button.get()
+    }
+
     pub fn volume_control(&self) -> VolumeControl {
         self.imp().volume_control.get()
+    }
+
+    pub fn track_info_label(&self) -> gtk::Label {
+        self.imp().track_info_label.get()
+    }
+
+    pub fn menu_button(&self) -> gtk::MenuButton {
+        self.imp().menu_button.get()
+    }
+
+    pub fn set_track_info_visible(&self, visible: bool) {
+        self.imp().track_info_label.set_visible(visible);
     }
 
     pub fn set_repeat_mode(&self, repeat_mode: RepeatMode) {

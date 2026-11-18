@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use std::{
-    cell::RefCell,
+    cell::{Cell, RefCell},
     fmt::{self, Display, Formatter},
     rc::Rc,
 };
@@ -15,7 +15,7 @@ use log::{debug, error};
 use crate::{
     application::ApplicationAction,
     audio::{
-        Controller, CoverCache, GstBackend, InhibitController, MprisController, PlayerState, Queue,
+        memory, Controller, GstBackend, InhibitController, MprisController, PlayerState, Queue,
         Song, WaveformGenerator,
     },
 };
@@ -116,6 +116,10 @@ pub struct AudioPlayer {
     queue: Queue,
     state: PlayerState,
     waveform_generator: WaveformGenerator,
+    /// Target of a session restore. GStreamer reports position 0 (or another
+    /// stale value) until the restore seek is applied; these updates must not
+    /// make the seek bar jump back while the user presses play.
+    restore_target: Cell<Option<u64>>,
 }
 
 impl fmt::Debug for AudioPlayer {
@@ -153,9 +157,11 @@ impl AudioPlayer {
             queue,
             state,
             waveform_generator,
+            restore_target: Cell::new(None),
         });
 
         res.clone().setup_channel();
+        memory::start_watchdog();
 
         res
     }
@@ -277,6 +283,7 @@ impl AudioPlayer {
     }
 
     pub fn stop(&self) {
+        self.clear_position_preview();
         self.set_playback_state(PlaybackState::Stopped);
     }
 
@@ -284,6 +291,8 @@ impl AudioPlayer {
         if self.queue.is_empty() {
             return;
         }
+
+        self.clear_position_preview();
 
         if let Some(current_song) = self.state.current_song() {
             // We only skip to the previous song if we are
@@ -333,6 +342,8 @@ impl AudioPlayer {
             return;
         }
 
+        self.clear_position_preview();
+
         if let Some(current_song) = self.state.current_song() {
             current_song.set_playing(false);
         }
@@ -374,6 +385,8 @@ impl AudioPlayer {
             return;
         }
 
+        self.clear_position_preview();
+
         if let Some(current_song) = self.state.current_song() {
             current_song.set_playing(false);
         }
@@ -407,6 +420,7 @@ impl AudioPlayer {
     }
 
     fn seek(&self, offset: u64, direction: SeekDirection) {
+        self.clear_position_preview();
         self.backend.seek(
             self.state.position(),
             self.state.duration(),
@@ -416,6 +430,7 @@ impl AudioPlayer {
     }
 
     pub fn seek_start(&self) {
+        self.clear_position_preview();
         let position = self.state.position() + 1;
         self.backend.seek(
             position,
@@ -443,14 +458,38 @@ impl AudioPlayer {
     }
 
     pub fn seek_position_rel(&self, position: f64) {
+        self.clear_position_preview();
         let duration = self.state.duration() as f64;
         let pos = (duration * position).clamp(0.0, duration);
         self.backend.seek_position(pos as u64);
     }
 
     pub fn seek_position_abs(&self, position: u64) {
-        let pos = u64::max(position, self.state.duration());
-        self.backend.seek_position(pos);
+        self.clear_position_preview();
+        let duration = self.state.duration();
+        let position = if duration > 0 {
+            position.min(duration)
+        } else {
+            position
+        };
+        self.backend.seek_position(position);
+    }
+
+    /// Seeks to the position saved in a restored session while keeping the
+    /// preview active until GStreamer acknowledges the seek.
+    pub fn seek_restored_position(&self, position: u64) {
+        self.backend.seek_position(position);
+    }
+
+    /// Position reported by the GStreamer backend, which is also available
+    /// while the pipeline is paused.
+    pub fn media_position(&self) -> Option<u64> {
+        self.backend.position()
+    }
+
+    /// Duration reported by the GStreamer backend.
+    pub fn media_duration(&self) -> Option<u64> {
+        self.backend.duration()
     }
 
     pub fn queue(&self) -> &Queue {
@@ -469,7 +508,48 @@ impl AudioPlayer {
         self.state.set_current_song(song);
     }
 
+    /// Updates the position shown in the player before GStreamer reports one.
+    /// Restoring a session seeks the pipeline asynchronously; without this
+    /// preview the elapsed time and the seek bar stay at zero until the
+    /// media has loaded and the seek is acknowledged.
+    pub fn preview_position(&self, position: u64) {
+        // Keep the restored time on screen until the backend actually reaches
+        // it. Pressing play before the seek is applied otherwise produces a
+        // visible jump to 0 and back.
+        self.restore_target.set(Some(position));
+        self.state.set_position(position);
+        for c in &self.controllers {
+            c.set_position(position, false);
+        }
+    }
+
+    /// Stops suppressing backend position updates, e.g. when a restored
+    /// session could not be seeked in time.
+    pub fn clear_position_preview(&self) {
+        self.restore_target.set(None);
+    }
+
+    /// Prepares the current song in the paused state. Session restore uses
+    /// this so that the pipeline is loaded and can be seeked before the user
+    /// presses play; `pause()` alone is a no-op while playback is stopped.
+    pub fn prepare(&self) {
+        if self.state.current_song().is_some() && !self.state.playing() {
+            self.set_playback_state(PlaybackState::Paused);
+        }
+    }
+
     fn update_position(&self, position: u64, notify: bool) {
+        if let Some(target) = self.restore_target.get() {
+            if position.abs_diff(target) <= 2 {
+                self.restore_target.set(None);
+            } else {
+                // GStreamer has not applied the restore seek yet and is still
+                // reporting the start of the song; keep showing the restored
+                // position instead of flashing back to zero.
+                return;
+            }
+        }
+
         self.state.set_position(position);
 
         for c in &self.controllers {
@@ -505,11 +585,11 @@ impl AudioPlayer {
             RepeatMode::RepeatAll => RepeatMode::RepeatOne,
             RepeatMode::RepeatOne => RepeatMode::Consecutive,
         };
-        self.queue.set_repeat_mode(new_mode);
+        self.set_repeat_mode(new_mode);
+    }
 
-        for c in &self.controllers {
-            c.set_repeat_mode(new_mode);
-        }
+    pub fn set_repeat_mode(&self, repeat: RepeatMode) {
+        self.update_repeat_mode(repeat);
     }
 
     fn update_repeat_mode(&self, repeat: RepeatMode) {
@@ -533,19 +613,61 @@ impl AudioPlayer {
         self.state.set_current_song(None);
         self.queue.clear();
 
-        let mut cover_cache = CoverCache::global().lock().unwrap();
-        cover_cache.clear();
+        // `Queue::clear` drops the songs; also release their artwork and give
+        // the freed pages back to the system.
+        memory::reclaim();
     }
 
     pub fn remove_song(&self, song: &Song) {
-        if song.playing() {
-            self.skip_next();
+        let current_song = self.state.current_song();
+        let was_current = current_song
+            .as_ref()
+            .is_some_and(|current| current.equals(song));
+        let was_playing = self.state.playing();
+
+        if was_current {
+            if let Some(current) = &current_song {
+                current.set_playing(false);
+            }
         }
 
-        self.queue.remove_song(song);
+        if !self.queue.remove_song(song) {
+            return;
+        }
 
-        if self.queue.is_empty() {
+        if !was_current {
+            // Removing a different track must not interrupt playback.
+            return;
+        }
+
+        if let Some(next_song) = self.queue.current_song() {
+            debug!("Continuing with: {}", next_song.uri());
+
+            if was_playing {
+                self.set_playback_state(PlaybackState::Paused);
+            }
+
+            for c in &self.controllers {
+                c.set_song(&next_song);
+            }
+
+            self.backend.set_song_uri(Some(&next_song.uri()));
+            self.backend.seek_start();
+
+            next_song.set_playing(true);
+            self.state.set_current_song(Some(next_song));
+
+            if was_playing {
+                self.set_playback_state(PlaybackState::Playing);
+            }
+        } else {
+            self.backend.set_song_uri(None);
             self.state.set_current_song(None);
+            self.state.set_playback_state(&PlaybackState::Stopped);
+
+            for c in &self.controllers {
+                c.set_playback_state(&PlaybackState::Stopped);
+            }
         }
     }
 

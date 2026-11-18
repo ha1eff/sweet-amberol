@@ -115,14 +115,27 @@ impl ShuffleListModel {
                 #[strong(rename_to = this)]
                 self,
                 move |_, position, removed, added| {
-                    if let Some(ref shuffle) = *this.imp().shuffle.borrow() {
-                        if let Some(shuffled_pos) = shuffle.get(position as usize) {
-                            this.items_changed(*shuffled_pos, removed, added);
-                            return;
+                    let mapped_position = {
+                        let mut shuffle = this.imp().shuffle.borrow_mut();
+                        match shuffle.as_mut() {
+                            Some(shuffle) if (position as usize) < shuffle.len() => {
+                                Some(shuffle[position as usize])
+                            }
+                            Some(shuffle) => {
+                                // New items are appended to the backing model.
+                                // Keep the shuffle map valid until the queue
+                                // moves those positions to the desired place.
+                                let start = shuffle.len() as u32;
+                                for index in 0..added {
+                                    shuffle.push(start + index);
+                                }
+                                Some(position)
+                            }
+                            None => None,
                         }
-                    }
+                    };
 
-                    this.items_changed(position, removed, added);
+                    this.items_changed(mapped_position.unwrap_or(position), removed, added);
                 }
             ));
         } else {
@@ -170,6 +183,38 @@ impl ShuffleListModel {
         } else {
             self.imp().shuffle.replace(None);
         }
+    }
+
+    /// Moves the last `count` entries of the shuffle map directly after
+    /// `model_position`. The backing model has already had those items
+    /// appended, so this is used by "Play Next" without reshuffling the
+    /// rest of the queue.
+    pub fn insert_positions_after(&self, model_position: u32, count: u32) {
+        let Some(ref model) = *self.imp().model.borrow() else {
+            return;
+        };
+
+        let n_items = model.n_items();
+        {
+            let mut shuffle = self.imp().shuffle.borrow_mut();
+            let Some(shuffle) = shuffle.as_mut() else {
+                return;
+            };
+
+            let count = count as usize;
+            if count == 0 || shuffle.len() < count {
+                return;
+            }
+
+            let start = shuffle.len() - count;
+            let moved: Vec<u32> = shuffle.split_off(start);
+            let insert_at = ((model_position + 1) as usize).min(shuffle.len());
+            for (offset, position) in moved.into_iter().enumerate() {
+                shuffle.insert(insert_at + offset, position);
+            }
+        }
+
+        self.items_changed(0, n_items, n_items);
     }
 
     pub fn unshuffle(&self) {

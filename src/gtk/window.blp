@@ -6,13 +6,14 @@ using Adw 1;
 
 template $AmberolWindow: Adw.ApplicationWindow {
   handle-menubar-accel: true;
-  width-request: 360;
+  width-request: 520;
   height-request: 660;
   default-width: 800;
 
   content: WindowHandle {
     $DragOverlay drag_overlay {
       title: _("Drop a song to add it to the playlist");
+      width-request: 520;
 
       child: Adw.ToastOverlay toast_overlay {
         child: Stack main_stack {
@@ -36,7 +37,7 @@ template $AmberolWindow: Adw.ApplicationWindow {
                   margin-start: 12;
                   margin-end: 12;
                   title: "Amberol";
-                  description: _("Select a file or a folder, or drag files from your file manager to the application window to add songs to the playlist");
+                  description: _("Add a folder to your music library, or select songs and drag files from your file manager to add them to the playlist");
 
                   child: Box {
                     orientation: vertical;
@@ -56,7 +57,7 @@ template $AmberolWindow: Adw.ApplicationWindow {
 
                     Button add_folder_button {
                       label: _("Add Folder");
-                      action-name: "queue.add-folder";
+                      action-name: "win.choose-library-folder";
 
                       styles [
                         "pill",
@@ -66,6 +67,15 @@ template $AmberolWindow: Adw.ApplicationWindow {
                     Button {
                       label: _("Add Song");
                       action-name: "queue.add-song";
+
+                      styles [
+                        "pill",
+                      ]
+                    }
+
+                    Button {
+                      label: _("Music Library");
+                      action-name: "win.show-library";
 
                       styles [
                         "pill",
@@ -90,7 +100,12 @@ template $AmberolWindow: Adw.ApplicationWindow {
                   show-title: false;
                 }
 
-                content: Box main_box {
+                content: ScrolledWindow main_scroll {
+                  hscrollbar-policy: never;
+                  vscrollbar-policy: automatic;
+                  vexpand: true;
+
+                  child: Box main_box {
                   orientation: vertical;
                   valign: center;
                   vexpand: true;
@@ -155,13 +170,20 @@ template $AmberolWindow: Adw.ApplicationWindow {
                   $AmberolPlaybackControl playback_control {
                     halign: "center";
                     margin-top: "0";
-                    margin-bottom: "24";
+                    margin-bottom: "12";
                   }
+                  };
                 };
               };
 
               sidebar: $AmberolPlaylistView playlist_view {};
             };
+          }
+
+          StackPage {
+            name: "library-view";
+
+            child: $AmberolLibraryView library_view {};
           }
         };
       };

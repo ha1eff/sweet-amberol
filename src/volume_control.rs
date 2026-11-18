@@ -27,6 +27,7 @@ mod imp {
 
         pub toggle_mute: Cell<bool>,
         pub prev_volume: Cell<f64>,
+        pub updating_mute: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -56,6 +57,19 @@ mod imp {
 
             self.obj().setup_adjustment();
             self.obj().setup_controller();
+
+            let obj = self.obj().clone();
+            self.volume_low_button.connect_clicked(clone!(
+                #[weak]
+                obj,
+                move |_| {
+                    let adj = obj.imp().volume_scale.adjustment();
+                    let currently_muted = obj.imp().toggle_mute.get()
+                        || obj.imp().volume_scale.value() <= adj.lower();
+                    let muted = !currently_muted;
+                    obj.toggle_mute(muted);
+                }
+            ));
         }
 
         fn dispose(&self) {
@@ -148,6 +162,17 @@ impl VolumeControl {
                 self,
                 move |adj, _| {
                     let value = adj.value();
+                    // Remember the last audible volume, so the mute button can
+                    // always bring it back.
+                    if value > adj.lower() {
+                        this.imp().prev_volume.set(value);
+                    }
+                    if !this.imp().updating_mute.get() {
+                        let muted = value <= adj.lower();
+                        if this.imp().toggle_mute.replace(muted) != muted {
+                            this.notify("toggle-mute");
+                        }
+                    }
                     if value == adj.lower() {
                         this.imp()
                             .volume_low_button
@@ -185,17 +210,34 @@ impl VolumeControl {
     }
 
     fn toggle_mute(&self, muted: bool) {
-        if muted != self.imp().toggle_mute.replace(muted) {
-            if muted {
-                let prev_value = self.imp().volume_scale.value();
-                self.imp().prev_volume.replace(prev_value);
-                self.imp().volume_scale.set_value(0.0);
-            } else {
-                let prev_value = self.imp().prev_volume.get();
-                self.imp().volume_scale.set_value(prev_value);
-            }
-            self.notify("toggle-mute");
+        let adjustment = self.imp().volume_scale.adjustment();
+        let current = self.imp().volume_scale.value();
+        let actually_muted = current <= adjustment.lower();
+
+        // Do not rely only on the boolean property here. The player state can
+        // restore volume 0 before the property has been synchronised, and the
+        // first click must still restore the saved audible volume.
+        if muted == actually_muted && muted == self.imp().toggle_mute.get() {
+            return;
         }
+
+        self.imp().updating_mute.set(true);
+        self.imp().toggle_mute.set(muted);
+        if muted {
+            if current > adjustment.lower() {
+                self.imp().prev_volume.set(current);
+            }
+            self.imp().volume_scale.set_value(adjustment.lower());
+        } else {
+            let prev_value = self.imp().prev_volume.get();
+            self.imp().volume_scale.set_value(if prev_value > adjustment.lower() {
+                prev_value
+            } else {
+                adjustment.upper()
+            });
+        }
+        self.imp().updating_mute.set(false);
+        self.notify("toggle-mute");
     }
 
     pub fn volume(&self) -> f64 {

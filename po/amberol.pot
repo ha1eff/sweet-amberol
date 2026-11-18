@@ -1,0 +1,1204 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the amberol package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: amberol\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-11 19:57+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: data/io.bassi.Amberol.desktop.in.in:3
+#: data/io.bassi.Amberol.metainfo.xml.in.in:6
+msgid "Amberol"
+msgstr ""
+
+#: data/io.bassi.Amberol.desktop.in.in:4
+msgid "Music Player"
+msgstr ""
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/io.bassi.Amberol.desktop.in.in:12
+msgid "music;player;media;audio;playlist;"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:7
+msgid "Plays music, and nothing else"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:9
+msgid ""
+"Amberol is a music player with no delusions of grandeur. If you just want to "
+"play music available on your local system then Amberol is the music player "
+"you are looking for."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:14
+msgid "Current features:"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:16
+msgid "adaptive UI"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:17
+msgid "UI recoloring using the album art"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:18
+msgid "drag and drop support to queue songs"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:19
+msgid "shuffle and repeat"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:20
+msgid "MPRIS integration"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:48
+#: data/io.bassi.Amberol.metainfo.xml.in.in:50
+msgid "Emmanuele Bassi"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:69
+msgid "Allow opening the containing folder of the current song"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:70
+msgid "Fix various crashes"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:71
+msgid "Handle playlist visibility better when loading or searching"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:72
+msgid "Small quality of life improvements to the interface"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:73
+#: data/io.bassi.Amberol.metainfo.xml.in.in:82
+#: data/io.bassi.Amberol.metainfo.xml.in.in:93
+#: data/io.bassi.Amberol.metainfo.xml.in.in:105
+#: data/io.bassi.Amberol.metainfo.xml.in.in:115
+#: data/io.bassi.Amberol.metainfo.xml.in.in:125
+#: data/io.bassi.Amberol.metainfo.xml.in.in:161
+#: data/io.bassi.Amberol.metainfo.xml.in.in:174
+#: data/io.bassi.Amberol.metainfo.xml.in.in:219
+msgid "Translation updates"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:80
+msgid "Update the metadata parsing library"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:81
+msgid "Release more resources when clearing the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:89
+msgid "Check for more file names for external album covers"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:90
+msgid "Update the MPRIS implementation for better conformance"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:91
+msgid "Set the Music folder as the initial location when adding songs"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:92
+msgid "Various style improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:99
+msgid "New versioning scheme! Amberol has switched to a year/release version."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:100
+msgid ""
+"With the new GNOME release, we are now taking advantage of the new "
+"libadwaita UI elements and features."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:101
+msgid ""
+"If the song title, author, or album is too long, we now scroll their "
+"contents."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:103
+msgid "Dependency updates for GTK, libadwaita, GStreamer, and lofty"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:104
+msgid "Bug fixes"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:111
+msgid "Bug fixes and small UI improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:113
+msgid "Ensure that the waveform display is always centered for short songs"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:114
+msgid "Fix display of non-square cover art"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:121
+msgid "The bug fixing comes in waves"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:123
+msgid "More crash fixes related to the background playback"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:124
+msgid "Minor UI tweaks"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:131
+#: data/io.bassi.Amberol.metainfo.xml.in.in:225
+msgid "Brown paper bag release!"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:133
+msgid "Fix a crash when playing in the background"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:139
+msgid "New release, lots of small changes."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:141
+msgid "Allow restoring the last playlist when starting a new session"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:142
+msgid "Allow toggling the background playback"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:143
+msgid "Add a quick mute/unmute button"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:144
+msgid "Restructure the main UI to improve legibility of the controls"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:145
+msgid "Do not add duplicate songs to the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:146
+msgid "Ensure that the playlist fits on mobile form factors"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:147
+msgid "And lots of bug fixes and UI improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:153
+msgid "It's been a while!"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:155
+msgid "Allow dragging on the waveform to seek inside a song"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:156
+msgid "Use the latest libadwaita about dialog"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:157
+msgid "Use the latest lofty for improved song metadata detection"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:158
+msgid "Detect more external cover file names"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:159
+msgid "Small improvements in the waveform animation"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:160
+msgid "Remove the unnecessary notification for the background portal"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:167
+msgid "Small paper cuts, and ReplayGain"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:169
+msgid "Add support ReplayGain metadata in the audio files"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:170
+msgid "Add support external cover art files for albums"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:171
+msgid "Improve the reliability of the playlist shuffle"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:172
+msgid "Tweak the playlist side bar to better fit on mobile form factors"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:173
+msgid "New translation: Serbian"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:175
+#: data/io.bassi.Amberol.metainfo.xml.in.in:187
+msgid "Bug fixes and performance improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:181
+msgid "Searchings deserves to be fuzzy"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:183
+msgid "Support fuzzy matching when searching inside the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:184
+msgid "Add a key shortcut for toggling shuffle"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:185
+msgid "Allow opening folders with Amberol"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:186
+#: data/io.bassi.Amberol.metainfo.xml.in.in:206
+msgid "Lots of translation updates"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:193
+msgid "Bug fixes and UI improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:198
+msgid "More features for less memory!"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:200
+msgid ""
+"You can now search for songs in the playlist: just start typing and Amberol "
+"will display the matching songs. Search also works when selecting songs"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:201
+msgid "Album art is shared across songs from the same album, saving memory"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:202
+msgid ""
+"Amberol can now run in the background using the appropriate sandbox portal"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:203
+msgid "The window size is restored across sessions"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:204
+msgid "You can now build and run Amberol on macOS"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:205
+msgid "Lots of bug fixes and UI improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:212
+msgid "Lots of small UI fixes and stability improvements"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:214
+msgid "Improve the consistency of the cover art display"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:215
+msgid "Make the behaviour of the playlist shuffle more predictable"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:216
+msgid "Fix state transitions when opening a song from the file manager"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:217
+msgid "Indicate the currently playing song in the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:218
+msgid "Improve the styling of the waveform scrubber"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:227
+msgid "Fix drag and drop on the initial landing page"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:233
+msgid "Another round of small, papercut issue fixes"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:235
+msgid "Accessibility fixes all across the board"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:236
+msgid "Better key navigation and shortcuts"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:237
+msgid "Improve the consistency of the UI"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:238
+msgid "Speed up the song loading"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:244
+msgid "Papercut fixes for the initial landing page and the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:246
+msgid "Fix styling of the folded playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:247
+msgid "Improve the cover art detection"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:248
+#: data/io.bassi.Amberol.metainfo.xml.in.in:257
+msgid "Add localization for various languages"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:254
+msgid "New round of UI touch-ups, to make Amberol more readable."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:256
+msgid "Improve the playlist management through a selection mode switch"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:258
+msgid "Make the text and controls more legible"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:259
+msgid "Improve the MPRIS integration"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:260
+msgid "Better support for right-to-left text locales"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:261
+msgid "Allow disabling UI recoloring"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:267
+msgid "Last UI change for a while, I promise."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:269
+msgid "Move the playlist panel to the left"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:270
+msgid "Drop the seek buttons"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:271
+msgid "Improve the rendering of the waveform"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:272
+msgid "Improve extraction of the song metadata"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:274
+msgid "Thanks to everyone who tried Amberol and filed issues!"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:279
+msgid "Bugs never end, and so does bug squashing."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:281
+msgid "Fix a crash when manually advancing through the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:282
+msgid "Make the waveform scrubber more legible"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:283
+msgid "Keep the UI state more consistent when toggling the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:285
+msgid ""
+"Many, many thanks to all of those who opened an issue after the 0.4.0 "
+"release!"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:290
+msgid "Fix a slight visual artefact in the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:295
+msgid "A brown paper bag release fixing an embarrassing bug."
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:300
+msgid "The first beta release for Amberol! Isn't this exciting?"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:302
+msgid "Show an initial page when launching Amberol"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:303
+msgid "Make the layout more mobile friendly without impacting desktop users"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:304
+msgid "Allow removing songs from the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:305
+msgid ""
+"Add initial (experimental) support for recursive loading of music folders"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:306
+msgid "Show the cover art for music tracks in the playlist"
+msgstr ""
+
+#: data/io.bassi.Amberol.metainfo.xml.in.in:307
+msgid "Show the current position inside the song"
+msgstr ""
+
+#: src/gtk/album-tile.blp:70 src/gtk/album-tile.blp:78 src/album_tile.rs:281
+msgid "Show artist"
+msgstr ""
+
+#: src/gtk/library-view.blp:15
+msgid "Back"
+msgstr ""
+
+#: src/gtk/library-view.blp:33 src/gtk/library-view.blp:138
+#: src/gtk/library-view.blp:316 src/library_view.rs:819
+msgid "Recent Albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:56 src/gtk/library-view.blp:61
+msgid "Search albums and artists"
+msgstr ""
+
+#: src/gtk/library-view.blp:72
+msgid "Library Menu"
+msgstr ""
+
+#: src/gtk/library-view.blp:83
+msgid "Play Albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:90
+msgid "Play albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:150
+msgctxt "a11y"
+msgid "Recent albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:156 src/gtk/library-view.blp:321
+#: src/library_view.rs:814
+msgid "Random Albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:168
+msgctxt "a11y"
+msgid "Random albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:174 src/gtk/library-view.blp:326
+#: src/library_view.rs:835
+msgid "Favorite Albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:186
+msgctxt "a11y"
+msgid "Favorite albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:196
+msgid "Search Albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:208
+msgctxt "a11y"
+msgid "Search albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:246
+msgid "Indexing Your Music"
+msgstr ""
+
+#: src/gtk/library-view.blp:247
+msgid ""
+"Amberol is reading the metadata of your music files. This only happens once; "
+"new tracks are added automatically."
+msgstr ""
+
+#: src/gtk/library-view.blp:262
+msgid "Your Library Is Empty"
+msgstr ""
+
+#: src/gtk/library-view.blp:263
+msgid ""
+"Choose the folder where your music is stored. Amberol will index it and keep "
+"the index up to date without changing your files."
+msgstr ""
+
+#: src/gtk/library-view.blp:266 src/gtk/library-view.blp:333 src/window.rs:1204
+msgid "Choose Music Folder"
+msgstr ""
+
+#: src/gtk/library-view.blp:283
+msgid "No Albums Found"
+msgstr ""
+
+#: src/gtk/library-view.blp:284
+msgid "Try a different album or artist name."
+msgstr ""
+
+#: src/gtk/library-view.blp:293
+msgid "Your Favorites Are Empty"
+msgstr ""
+
+#: src/gtk/library-view.blp:294
+msgid ""
+"Mark albums with the star in the playlist and in the album context menu, and "
+"they will appear here."
+msgstr ""
+
+#: src/gtk/library-view.blp:297
+msgid "Browse Recent Albums"
+msgstr ""
+
+#: src/gtk/library-view.blp:338
+msgid "Rescan Library"
+msgstr ""
+
+#: src/gtk/library-view.blp:345
+msgid "Now Playing"
+msgstr ""
+
+#: src/gtk/playback-control.blp:21
+msgid "Play the Previous Song"
+msgstr ""
+
+#: src/gtk/playback-control.blp:28
+msgctxt "a11y"
+msgid "Skip backwards"
+msgstr ""
+
+#: src/gtk/playback-control.blp:36
+msgid "Toggle Play"
+msgstr ""
+
+#: src/gtk/playback-control.blp:44
+msgctxt "a11y"
+msgid "Toggle play"
+msgstr ""
+
+#: src/gtk/playback-control.blp:52
+msgid "Play the Next Song"
+msgstr ""
+
+#: src/gtk/playback-control.blp:59
+msgctxt "a11y"
+msgid "Skip forward"
+msgstr ""
+
+#: src/gtk/playback-control.blp:79
+msgid "Toggle Playlist"
+msgstr ""
+
+#: src/gtk/playback-control.blp:86
+msgctxt "a11y"
+msgid "Toggle playlist"
+msgstr ""
+
+#: src/gtk/playback-control.blp:94 src/gtk/queue-row.blp:85
+#: src/gtk/queue-row.blp:167 src/album_tile.rs:338 src/queue_row.rs:295
+#: src/queue_row.rs:426 src/window.rs:1291 src/window.rs:1314
+msgid "Add to Favorites"
+msgstr ""
+
+#: src/gtk/playback-control.blp:97 src/gtk/queue-row.blp:93
+#: src/gtk/queue-row.blp:175
+msgctxt "a11y"
+msgid "Toggle favorite"
+msgstr ""
+
+#: src/gtk/playback-control.blp:116
+msgid "Enable Repeat"
+msgstr ""
+
+#: src/gtk/playback-control.blp:123
+msgctxt "a11y"
+msgid "Repeat"
+msgstr ""
+
+#: src/gtk/playback-control.blp:133
+msgid "Main Menu"
+msgstr ""
+
+#: src/gtk/playback-control.blp:141
+msgctxt "a11y"
+msgid "Primary menu"
+msgstr ""
+
+#: src/gtk/playback-control.blp:163
+msgid "Track information"
+msgstr ""
+
+#: src/gtk/playback-control.blp:173
+msgid "Copy"
+msgstr ""
+
+#: src/gtk/playback-control.blp:178 src/window.rs:238
+msgid "Open Folder"
+msgstr ""
+
+#: src/gtk/playback-control.blp:185 src/gtk/window.blp:77
+msgid "Music Library"
+msgstr ""
+
+#: src/gtk/playback-control.blp:192
+msgid "Add _Song"
+msgstr ""
+
+#: src/gtk/playback-control.blp:197
+msgid "Add _Folder"
+msgstr ""
+
+#: src/gtk/playback-control.blp:202
+msgid "Clear"
+msgstr ""
+
+#: src/gtk/playback-control.blp:209
+msgid "Restore Session"
+msgstr ""
+
+#: src/gtk/playback-control.blp:214
+msgid "_Cover Art Gradient"
+msgstr ""
+
+#: src/gtk/playback-control.blp:219
+msgid "_Background Playback"
+msgstr ""
+
+#: src/gtk/playback-control.blp:224
+msgid "Show Track _Information"
+msgstr ""
+
+#: src/gtk/playback-control.blp:231
+msgid "_ReplayGain"
+msgstr ""
+
+#: src/gtk/playback-control.blp:234
+msgctxt "replaygain-menu"
+msgid "_Album"
+msgstr ""
+
+#: src/gtk/playback-control.blp:240
+msgctxt "replaygain-menu"
+msgid "_Song"
+msgstr ""
+
+#: src/gtk/playback-control.blp:246
+msgctxt "replaygain-menu"
+msgid "_Disabled"
+msgstr ""
+
+#: src/gtk/playback-control.blp:255
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/gtk/playback-control.blp:260
+msgid "_About Amberol"
+msgstr ""
+
+#: src/gtk/playback-control.blp:265
+msgid "_Quit"
+msgstr ""
+
+#: src/gtk/playlist-view.blp:16 src/gtk/playlist-view.blp:23
+msgid "Open Music Library"
+msgstr ""
+
+#: src/gtk/playlist-view.blp:33
+msgid "Playlist"
+msgstr ""
+
+#: src/gtk/playlist-view.blp:55
+msgid "Close the Playlist"
+msgstr ""
+
+#: src/gtk/playlist-view.blp:100
+msgid "Select All Songs"
+msgstr ""
+
+#: src/gtk/playlist-view.blp:113
+msgid "Remove Selected Songs"
+msgstr ""
+
+#: src/gtk/queue-row.blp:27
+msgctxt "a11y"
+msgid "No cover available"
+msgstr ""
+
+#: src/gtk/queue-row.blp:105
+msgctxt "a11y"
+msgid "Currently playing"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:9
+msgctxt "shortcut window"
+msgid "General"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:12
+msgctxt "shortcut window"
+msgid "Toggle primary menu"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:17
+msgctxt "shortcut window"
+msgid "Copy song details to the clipboard"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:22
+msgctxt "shortcut window"
+msgid "Show shortcuts"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:27
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Playlist"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:36
+msgctxt "shortcut window"
+msgid "Add a song to the playlist"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:41
+msgctxt "shortcut window"
+msgid "Add a folder to the playlist"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:46
+msgctxt "shortcut window"
+msgid "Clear the playlist"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:51
+msgctxt "shortcut window"
+msgid "Toggle the playlist pane"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:56
+msgctxt "shortcut window"
+msgid "Toggle shuffling songs"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:62
+msgctxt "shortcut window"
+msgid "Playback"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:65
+msgctxt "shortcut window"
+msgid "Toggle play/pause"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:70
+msgctxt "shortcut window"
+msgid "Previous song"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:75
+msgctxt "shortcut window"
+msgid "Next song"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:80
+msgctxt "shortcut window"
+msgid "Seek backwards in the current song"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:85
+msgctxt "shortcut window"
+msgid "Seek forward in the current song"
+msgstr ""
+
+#: src/gtk/window.blp:15
+msgid "Drop a song to add it to the playlist"
+msgstr ""
+
+#: src/gtk/window.blp:40
+msgid ""
+"Select a file or a folder, or drag files from your file manager to the "
+"application window to add songs to the playlist"
+msgstr ""
+
+#: src/gtk/window.blp:49
+msgid "Restore Playlist"
+msgstr ""
+
+#: src/gtk/window.blp:59
+msgid "Add Folder"
+msgstr ""
+
+#: src/gtk/window.blp:68
+msgid "Add Song"
+msgstr ""
+
+#: src/gtk/window.blp:143
+msgctxt "a11y"
+msgid "Elapsed time"
+msgstr ""
+
+#: src/gtk/window.blp:157
+msgctxt "a11y"
+msgid "Remaining time"
+msgstr ""
+
+#: src/album.rs:128 src/audio/song.rs:424
+msgid "Unknown album"
+msgstr ""
+
+#: src/album.rs:141 src/audio/song.rs:410
+msgid "Unknown artist"
+msgstr ""
+
+#: src/album_tile.rs:312 src/queue_row.rs:408
+msgid "Play"
+msgstr ""
+
+#: src/album_tile.rs:322 src/queue_row.rs:416
+msgid "Add to Queue"
+msgstr ""
+
+#: src/album_tile.rs:336 src/queue_row.rs:293 src/queue_row.rs:424
+#: src/window.rs:1311
+msgid "Remove from Favorites"
+msgstr ""
+
+#: src/album_tile.rs:352 src/queue_row.rs:445
+msgid "Play Next"
+msgstr ""
+
+#: src/album_tile.rs:388 src/queue_row.rs:437
+msgid "Delete from Device"
+msgstr ""
+
+#: src/album_tile.rs:409 src/queue_row.rs:468
+msgid "Are you sure?"
+msgstr ""
+
+#: src/album_tile.rs:418 src/album_tile.rs:419 src/queue_row.rs:477
+#: src/queue_row.rs:478
+msgid "Yes"
+msgstr ""
+
+#: src/album_tile.rs:424 src/album_tile.rs:425 src/queue_row.rs:483
+#: src/queue_row.rs:484
+msgid "No"
+msgstr ""
+
+#. Translators: Replace "translator-credits" with your names, one name per line
+#: src/application.rs:269
+msgid "translator-credits"
+msgstr ""
+
+#: src/application.rs:281
+msgid "Amberol needs to run in the background to play music"
+msgstr ""
+
+#: src/audio/inhibit_controller.rs:40
+msgid "Playback in progress"
+msgstr ""
+
+#: src/audio/song.rs:78
+msgid "{} kbps"
+msgstr ""
+
+#: src/audio/song.rs:81
+msgid "{} bit"
+msgstr ""
+
+#: src/audio/song.rs:89
+msgid "{} kHz"
+msgstr ""
+
+#: src/audio/song.rs:417
+msgid "Unknown title"
+msgstr ""
+
+#: src/cover_picture.rs:78
+msgid "Cover image"
+msgstr ""
+
+#: src/library_view.rs:573
+msgid "{} selected"
+msgid_plural "{} selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/library_view.rs:766
+msgid "{} track"
+msgid_plural "{} tracks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/library_view.rs:781
+msgid "Play Artist Albums"
+msgstr ""
+
+#: src/library_view.rs:794
+msgid "Search Results"
+msgstr ""
+
+#: src/library_view.rs:797
+msgid "Play Search Results"
+msgstr ""
+
+#: src/library_view.rs:817
+msgid "Play Random Albums"
+msgstr ""
+
+#: src/library_view.rs:822
+msgid "Play Recent Albums"
+msgstr ""
+
+#: src/library_view.rs:839
+msgid "Play Favorite Albums"
+msgstr ""
+
+#: src/library_view.rs:885
+msgid "{} album"
+msgid_plural "{} albums"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/playback_control.rs:134
+msgid "Do Not Repeat"
+msgstr ""
+
+#: src/playback_control.rs:138
+msgid "Repeat All Songs"
+msgstr ""
+
+#: src/playback_control.rs:142
+msgid "Repeat the Current Song"
+msgstr ""
+
+#: src/queue_row.rs:452
+msgid "Remove from Playlist"
+msgstr ""
+
+#: src/window.rs:202
+msgid "Audio files"
+msgstr ""
+
+#: src/window.rs:212
+msgid "_Add Song"
+msgstr ""
+
+#: src/window.rs:216
+msgid "Open File"
+msgstr ""
+
+#: src/window.rs:221 src/window.rs:243 src/window.rs:3470
+msgid "Unable to access files"
+msgstr ""
+
+#: src/window.rs:235
+msgid "_Add Folder"
+msgstr ""
+
+#: src/window.rs:780
+msgid "No albums found for this artist"
+msgstr ""
+
+#: src/window.rs:785 src/window.rs:864 src/window.rs:900 src/window.rs:931
+#: src/window.rs:1278
+msgid "Unable to load the music library"
+msgstr ""
+
+#: src/window.rs:1034
+msgid "Choose a folder for your music library"
+msgstr ""
+
+#: src/window.rs:1098
+msgid "Indexed {} song"
+msgid_plural "Indexed {} songs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/window.rs:1112
+msgid "Unable to scan the music folder"
+msgstr ""
+
+#: src/window.rs:1201
+msgid "_Choose Folder"
+msgstr ""
+
+#: src/window.rs:1209
+msgid "Unable to access the selected folder"
+msgstr ""
+
+#: src/window.rs:1257 src/window.rs:1444 src/window.rs:1575
+msgid "No songs found in this album"
+msgstr ""
+
+#: src/window.rs:1260 src/window.rs:1449
+msgid "Unable to load album"
+msgstr ""
+
+#: src/window.rs:1275 src/window.rs:2185
+msgid "No songs found"
+msgstr ""
+
+#: src/window.rs:1513
+msgid "Added one song"
+msgid_plural "Added {} songs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/window.rs:1542 src/window.rs:3437
+msgid "Will Play Next"
+msgstr ""
+
+#: src/window.rs:1570
+msgid "Unable to delete album"
+msgstr ""
+
+#: src/window.rs:1600 src/window.rs:1659
+msgid "Some files could not be deleted"
+msgstr ""
+
+#: src/window.rs:1602
+msgid "Album deleted from device"
+msgstr ""
+
+#: src/window.rs:1616 src/window.rs:1624 src/window.rs:1630
+msgid "Unable to delete songs"
+msgstr ""
+
+#: src/window.rs:1661
+msgid "Songs deleted from device"
+msgstr ""
+
+#. ReplayGain is section 4; keep the album count right after it.
+#: src/window.rs:1847
+msgid "Album Count"
+msgstr ""
+
+#: src/window.rs:1859
+msgid "Custom"
+msgstr ""
+
+#: src/window.rs:1928 src/window.rs:1929
+msgid "Apply"
+msgstr ""
+
+#: src/window.rs:2116
+msgid "No available song found"
+msgstr ""
+
+#: src/window.rs:2996
+msgid "Unable to access dropped files"
+msgstr ""
+
+#: src/window.rs:3091
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/window.rs:3102
+msgid "{hours} hour {minutes} remaining"
+msgid_plural "{hours} hours {minutes} remaining"
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: the '{}' must be left unmodified, and
+#. it will be replaced by the number of minutes remaining
+#. in the playlist
+#: src/window.rs:3112
+msgid "{} minute remaining"
+msgid_plural "{} minutes remaining"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/window.rs:3216
+msgid "No song selected"
+msgstr ""
+
+#. Translators: The '{}' must be left unmodified, and
+#. it is expanded to the number of songs selected
+#: src/window.rs:3221
+msgid "{} song selected"
+msgid_plural "{} songs selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/window.rs:3521
+msgid "Added a new song"
+msgstr ""
+
+#: src/window.rs:3523
+msgid "Added new songs"
+msgstr ""
+
+#. Translators: `{title}` and `{artist}` must be left
+#. untranslated; they will expand to the title and
+#. artist of the currently playing song, respectively
+#: src/window.rs:3551
+msgid "Currently playing “{title}” by “{artist}”"
+msgstr ""
+
+#: src/window.rs:3588
+msgid "Unable to open folder"
+msgstr ""

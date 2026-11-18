@@ -1,0 +1,330 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2026 Amberol contributors
+
+using Gtk 4.0;
+using Adw 1;
+
+template $AmberolLibraryView: Widget {
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      [start]
+      Button back_button {
+        icon-name: "go-previous-symbolic";
+        action-name: "win.library-back";
+        tooltip-text: _("Back");
+
+        styles [
+          "flat",
+        ]
+      }
+
+      title-widget: Stack title_stack {
+        transition-type: crossfade;
+
+        StackPage {
+          name: "title";
+
+          child: Box {
+            orientation: vertical;
+            valign: center;
+
+            Label title_label {
+              label: _("Recent Albums");
+              ellipsize: end;
+
+              styles [
+                "heading",
+              ]
+            }
+
+            Label subtitle_label {
+              ellipsize: end;
+
+              styles [
+                "caption",
+                "dim-label",
+              ]
+            }
+          };
+        }
+
+        StackPage {
+          name: "search";
+
+          child: SearchEntry search_entry {
+            placeholder-text: _("Search albums and artists");
+            width-request: 320;
+            search-delay: 0;
+
+            accessibility {
+              label: _("Search albums and artists");
+            }
+          };
+        }
+      };
+
+      [end]
+      MenuButton {
+        menu-model: library_menu;
+        icon-name: "open-menu-symbolic";
+        primary: true;
+        tooltip-text: _("Library Menu");
+
+        styles [
+          "flat",
+        ]
+      }
+
+      [end]
+      Button play_albums_button {
+        icon-name: "media-playback-start-symbolic";
+        action-name: "win.play-albums";
+        tooltip-text: _("Play Albums");
+
+        styles [
+          "play-random-button",
+        ]
+
+        accessibility {
+          label: _("Play albums");
+        }
+      }
+
+    }
+
+    content: Box {
+      orientation: horizontal;
+
+      Box nav_rail {
+        orientation: vertical;
+        spacing: 6;
+        width-request: 52;
+        margin-top: 10;
+        margin-bottom: 10;
+        margin-start: 0;
+        margin-end: 4;
+
+        styles [
+          "library-rail",
+        ]
+
+        ToggleButton recent_button {
+          icon-name: "document-open-recent-symbolic";
+          tooltip-text: _("Recent Albums");
+          halign: center;
+          valign: start;
+          width-request: 36;
+          height-request: 36;
+
+          styles [
+            "flat",
+            "rail-button",
+          ]
+
+          accessibility {
+            label: C_("a11y", "Recent albums");
+          }
+        }
+
+        ToggleButton random_button {
+          icon-name: "media-playlist-shuffle-symbolic";
+          tooltip-text: _("Random Albums");
+          halign: center;
+          valign: start;
+          width-request: 36;
+          height-request: 36;
+
+          styles [
+            "flat",
+            "rail-button",
+          ]
+
+          accessibility {
+            label: C_("a11y", "Random albums");
+          }
+        }
+
+        ToggleButton favorites_button {
+          icon-name: "starred-symbolic";
+          tooltip-text: _("Favorite Albums");
+          halign: center;
+          valign: start;
+          width-request: 36;
+          height-request: 36;
+
+          styles [
+            "flat",
+            "rail-button",
+          ]
+
+          accessibility {
+            label: C_("a11y", "Favorite albums");
+          }
+        }
+
+        Box {
+          vexpand: true;
+        }
+
+        ToggleButton search_button {
+          icon-name: "system-search-symbolic";
+          tooltip-text: _("Search Albums");
+          halign: center;
+          valign: end;
+          width-request: 36;
+          height-request: 36;
+
+          styles [
+            "flat",
+            "rail-button",
+          ]
+
+          accessibility {
+            label: C_("a11y", "Search albums");
+          }
+        }
+      }
+
+      Stack library_stack {
+        hexpand: true;
+        transition-type: crossfade;
+
+        StackPage {
+          name: "albums";
+
+          child: ScrolledWindow {
+            hscrollbar-policy: never;
+            vscrollbar-policy: automatic;
+            vexpand: true;
+            width-request: 440;
+
+            child: GridView albums_grid {
+              single-click-activate: false;
+              min-columns: 2;
+              max-columns: 12;
+              margin-start: 10;
+              margin-end: 10;
+              margin-top: 10;
+              margin-bottom: 10;
+
+              styles [
+                "album-grid",
+              ]
+            };
+          };
+        }
+
+        StackPage {
+          name: "loading";
+
+          child: Adw.StatusPage {
+            title: _("Indexing Your Music");
+            description: _("Amberol is reading the metadata of your music files. This only happens once; new tracks are added automatically.");
+
+            child: Spinner {
+              spinning: true;
+              width-request: 32;
+              height-request: 32;
+            };
+          };
+        }
+
+        StackPage {
+          name: "empty";
+
+          child: Adw.StatusPage {
+            icon-name: "folder-music-symbolic";
+            title: _("Your Library Is Empty");
+            description: _("Choose the folder where your music is stored. Amberol will index it and keep the index up to date without changing your files.");
+
+            child: Button {
+              label: _("Choose Music Folder");
+              action-name: "win.choose-library-folder";
+              halign: center;
+
+              styles [
+                "suggested-action",
+                "pill",
+              ]
+            };
+          };
+        }
+
+        StackPage {
+          name: "empty-search";
+
+          child: Adw.StatusPage {
+            icon-name: "system-search-symbolic";
+            title: _("No Albums Found");
+            description: _("Try a different album or artist name.");
+          };
+        }
+
+        StackPage {
+          name: "empty-favorites";
+
+          child: Adw.StatusPage {
+            icon-name: "starred-symbolic";
+            title: _("Your Favorites Are Empty");
+            description: _("Mark albums with the star in the playlist and in the album context menu, and they will appear here.");
+
+            child: Button {
+              label: _("Browse Recent Albums");
+              action-name: "win.recent-albums";
+              halign: center;
+
+              styles [
+                "suggested-action",
+                "pill",
+              ]
+            };
+          };
+        }
+      }
+    };
+  }
+}
+
+menu library_menu {
+  section {
+    item {
+      label: _("Recent Albums");
+      action: "win.recent-albums";
+    }
+
+    item {
+      label: _("Random Albums");
+      action: "win.random-albums";
+    }
+
+    item {
+      label: _("Favorite Albums");
+      action: "win.favorite-albums";
+    }
+  }
+
+  section {
+    item {
+      label: _("Choose Music Folder");
+      action: "win.choose-library-folder";
+    }
+
+    item {
+      label: _("Rescan Library");
+      action: "win.rescan-library";
+    }
+  }
+
+  section {
+    item {
+      label: _("Now Playing");
+      action: "win.show-now-playing";
+    }
+
+    item {
+      label: _("_Cover Art Gradient");
+      action: "win.enable-recoloring";
+    }
+  }
+}
