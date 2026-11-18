@@ -16,8 +16,8 @@ This is **Sweet Amberol**, a fork maintained by
 [haleff](https://github.com/ha1eff) with a Lollypop-style album grid, a stable
 session restore, low memory use and tools for editing cover artwork.
 
-![Full UI](./data/screenshots/amberol-full.png)
-![Compact UI](./data/screenshots/amberol-compact.png)
+![Random albums](https://github.com/user-attachments/assets/fbad4827-304c-47ea-a8ba-d3c8498a6b32)
+![Playlist and now playing](https://github.com/user-attachments/assets/491e2510-e366-41de-90a4-c92c76a442e1)
 
 Building a .deb package
 -----------------------
