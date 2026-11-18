@@ -12,22 +12,39 @@ not show you lyrics for your songs, or the Wikipedia page for your bands.
 
 Amberol plays music, and nothing else.
 
+This is **Sweet Amberol**, a fork maintained by
+[haleff](https://github.com/ha1eff) with a Lollypop-style album grid, a stable
+session restore, low memory use and tools for editing cover artwork.
+
 ![Full UI](./data/screenshots/amberol-full.png)
 ![Compact UI](./data/screenshots/amberol-compact.png)
 
-Flatpak builds
---------------
+Building a .deb package
+-----------------------
 
-The recommended way of installing Amberol is through Flatpak. If you don't have
-Flatpak installed, you can get it from [the Flatpak website](https://flatpak.org/setup).
+Install the build dependencies once:
 
-You can install stable builds of Amberol from [Flathub](https://flathub.org)
-by using this command:
+    sudo apt install cargo meson ninja-build gettext libxml2-utils pkg-config \
+      libgtk-4-dev libadwaita-1-dev \
+      libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+      libgstreamer-plugins-bad1.0-dev libgstreamer-bad-audio1.0-dev \
+      blueprint-compiler desktop-file-utils
 
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    flatpak install flathub io.bassi.Amberol
+Set up the build directory and run the packaging script:
 
-<a href="https://flathub.org/apps/details/io.bassi.Amberol"><img src="https://flathub.org/api/badge?svg&locale=en" width="200"/></a>
+    meson setup build --prefix=/usr/local
+    ./packaging/build-deb.sh local
+
+The script compiles the project, stages a minimal install tree and writes the
+package to `dist/amberol_2026.2+local_amd64.deb`. Install it with:
+
+    sudo apt install ./dist/amberol_2026.2+local_amd64.deb
+
+On later builds only the packaging script is needed. If you edit a `.blp` file
+or the stylesheet and the interface does not update, force a resource rebuild:
+
+    rm -f build/src/amberol.gresource
+    meson compile -C build
 
 Getting in touch
 ----------------
@@ -46,7 +63,7 @@ How to obtain debugging information
 
 Run Amberol from your terminal using:
 
-    RUST_BACKTRACE=1 RUST_LOG=amberol=debug flatpak run io.bassi.Amberol
+    RUST_BACKTRACE=1 RUST_LOG=amberol=debug amberol
 
 to obtain a full debug log.
 
