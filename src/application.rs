@@ -275,6 +275,10 @@ impl Application {
             .translator_credits(i18n("translator-credits"))
             .build();
 
+        dialog.add_credit_section(
+            Some("Sweet Amberol"),
+            &["haleff <https://github.com/ha1eff>"],
+        );
         dialog.present(Some(&window));
     }
 
