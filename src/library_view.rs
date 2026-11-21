@@ -82,6 +82,10 @@ mod imp {
         /// Infinite scroll is only meaningful on the Recent Albums page.
         pub recent_pagination: Cell<bool>,
         pub loading_more: Cell<bool>,
+        /// Scroll value at which the last page was requested. Prevents a
+        /// single scroll gesture (or a layout shift after appending) from
+        /// loading several pages in a row.
+        pub last_load_value: Cell<f64>,
         pub animation: RefCell<Option<adw::TimedAnimation>>,
         pub animation_generation: Cell<u64>,
         pub fade_phase: Cell<FadePhase>,
@@ -119,6 +123,7 @@ mod imp {
                 search_source: RefCell::default(),
                 recent_pagination: Cell::new(false),
                 loading_more: Cell::new(false),
+                last_load_value: Cell::new(f64::NEG_INFINITY),
                 animation: RefCell::default(),
                 animation_generation: Cell::new(0),
                 fade_phase: Cell::new(FadePhase::Idle),
@@ -513,9 +518,10 @@ impl LibraryView {
         imp.albums_grid.add_controller(empty_click);
 
         // Ask the window for the next page of recent albums once the user
-        // scrolls close to the bottom. Only `value-changed` is watched: adding
-        // a page changes the adjustment's upper bound but not its value, so
-        // this cannot trigger a second load by itself.
+        // scrolls close to the bottom. `loading_more` covers the time while a
+        // page is being added, and `last_load_value` makes sure the user has
+        // scrolled past the previous bottom before another page is requested:
+        // a single wheel gesture can emit many value-changed signals.
         imp.albums_scroll.vadjustment().connect_value_changed(clone!(
             #[weak(rename_to = view)]
             self,
@@ -529,9 +535,14 @@ impl LibraryView {
                 }
 
                 let upper = adjustment.upper();
-                let remaining = upper - adjustment.value() - adjustment.page_size();
-                if upper > 0.0 && remaining <= adjustment.page_size() * 0.5 {
+                let value = adjustment.value();
+                let remaining = upper - value - adjustment.page_size();
+                if upper > 0.0
+                    && remaining <= adjustment.page_size() * 0.5
+                    && value > imp.last_load_value.get() + 1.0
+                {
                     imp.loading_more.set(true);
+                    imp.last_load_value.set(value);
                     view.emit_by_name::<()>("load-more-albums", &[]);
                 }
             }
@@ -566,6 +577,7 @@ impl LibraryView {
         let imp = self.imp();
         self.clear_selection();
         imp.loading_more.set(false);
+        imp.last_load_value.set(f64::NEG_INFINITY);
         imp.store.remove_all();
         imp.store.splice(0, 0, &albums);
         self.update_visible_page();
@@ -902,6 +914,7 @@ impl LibraryView {
         imp.search_results_mode.set(false);
         imp.recent_pagination.set(!random);
         imp.loading_more.set(false);
+        imp.last_load_value.set(f64::NEG_INFINITY);
         imp.updating_buttons.set(true);
         if random {
             imp.title_label.set_label(&i18n("Random Albums"));
