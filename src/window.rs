@@ -3,7 +3,7 @@
 
 use std::{
     cell::{Cell, RefCell},
-    collections::HashSet,
+    collections::{HashSet, VecDeque},
     fs,
     path::{Path, PathBuf},
     rc::Rc,
@@ -211,6 +211,17 @@ fn cover_menu_button(icon: &str, label: &str) -> gtk::Button {
     button
 }
 
+/// State shared between `queue_songs_with_options` and its idle loader.
+///
+/// Files opened from the file manager may arrive as several `open` calls in
+/// quick succession. Keeping the pending files in shared state lets those
+/// calls extend the load already in progress instead of cancelling it.
+#[derive(Clone)]
+pub struct QueueLoadState {
+    files: Rc<RefCell<VecDeque<gio::File>>>,
+    total: Rc<Cell<u32>>,
+}
+
 mod imp {
     use glib::{ParamSpec, ParamSpecBoolean, ParamSpecEnum, Value};
     use once_cell::sync::Lazy;
@@ -283,6 +294,7 @@ mod imp {
         pub queue_loading: Cell<bool>,
         pub queue_single_album: Cell<Option<bool>>,
         pub queue_load_generation: Cell<u64>,
+        pub active_queue_load: RefCell<Option<QueueLoadState>>,
         pub restore_session_checked: Cell<bool>,
         pub pending_restore: RefCell<Option<utils::SessionState>>,
         pub added_songs_count: Cell<u32>,
@@ -523,6 +535,7 @@ mod imp {
                 queue_loading: Cell::new(false),
                 queue_single_album: Cell::new(None),
                 queue_load_generation: Cell::new(0),
+                active_queue_load: RefCell::new(None),
                 restore_session_checked: Cell::new(false),
                 pending_restore: RefCell::default(),
                 added_songs_count: Cell::new(0),
@@ -2532,6 +2545,7 @@ impl Window {
         // is currently playing before the caches disappear from disk.
         imp.queue_load_generation
             .set(imp.queue_load_generation.get().wrapping_add(1));
+        imp.active_queue_load.replace(None);
         imp.library_scan_generation
             .set(imp.library_scan_generation.get().wrapping_add(1));
         self.finish_library_processing();
@@ -2752,21 +2766,40 @@ impl Window {
         autoplay: bool,
         switch_view: bool,
     ) {
+        let imp = self.imp();
+
         if queue.is_empty() {
-            self.add_toast(i18n("No available song found"));
+            if !imp.queue_loading.get() {
+                self.add_toast(i18n("No available song found"));
+            }
             return;
         }
 
-        // A reset invalidates the pending idle batches, so a queue that was
+        // The file manager may deliver several opened files as separate
+        // `open` calls in quick succession. Fold them into the load that is
+        // already running: starting a new one would invalidate the pending
+        // idle batch and silently drop the files that arrived just before.
+        if !replace && imp.queue_loading.get() {
+            if let Some(active) = imp.active_queue_load.borrow().as_ref().cloned() {
+                let added = queue.len() as u32;
+                active.total.set(active.total.get() + added);
+                active.files.borrow_mut().extend(queue);
+                debug!("Appended {added} files to the ongoing queue load");
+                return;
+            }
+        }
+
+        // A reset invalidates pending idle batches, so a queue that was
         // still loading cannot repopulate the player after the reset.
-        let load_generation = self.imp().queue_load_generation.get().wrapping_add(1);
-        self.imp().queue_load_generation.set(load_generation);
+        let load_generation = imp.queue_load_generation.get().wrapping_add(1);
+        imp.queue_load_generation.set(load_generation);
+        imp.active_queue_load.replace(None);
 
         if replace {
             self.clear_queue();
         }
 
-        self.imp().queue_loading.set(true);
+        imp.queue_loading.set(true);
         if switch_view {
             self.switch_mode(WindowMode::MainView);
             self.set_playlist_visible(true);
@@ -2776,7 +2809,7 @@ impl Window {
         self.action_set_enabled("queue.add-song", false);
         self.action_set_enabled("queue.add-folder", false);
         self.action_set_enabled("queue.clear", false);
-        self.imp().playlist_view.begin_loading();
+        imp.playlist_view.begin_loading();
 
         // Begin the trace
         let now = Instant::now();
@@ -2784,7 +2817,13 @@ impl Window {
         // Turn the list of files into songs on idle, in small time-budgeted
         // batches. One file per idle callback made loading thousands of
         // tracks artificially slow.
-        let n_files = queue.len() as u32;
+        let files = Rc::new(RefCell::new(queue.into_iter().collect::<VecDeque<_>>()));
+        let total = Rc::new(Cell::new(files.borrow().len() as u32));
+
+        imp.active_queue_load.replace(Some(QueueLoadState {
+            files: files.clone(),
+            total: total.clone(),
+        }));
 
         let mut known_keys: HashSet<String> = HashSet::new();
         if let Some(player) = self.player() {
@@ -2799,7 +2838,6 @@ impl Window {
             }
         }
 
-        let mut files = queue.into_iter().peekable();
         let mut songs = Vec::new();
         let mut scanned: u32 = 0;
         let mut duplicates: u32 = 0;
@@ -2811,6 +2849,7 @@ impl Window {
             glib::ControlFlow::Break,
             move || {
                 if win.imp().queue_load_generation.get() != load_generation {
+                    win.imp().active_queue_load.replace(None);
                     return glib::ControlFlow::Break;
                 }
 
@@ -2818,7 +2857,7 @@ impl Window {
                 let batch_start = Instant::now();
 
                 while batch_start.elapsed() < BATCH_BUDGET {
-                    let Some(file) = files.next() else {
+                    let Some(file) = files.borrow_mut().pop_front() else {
                         break;
                     };
                     scanned += 1;
@@ -2843,16 +2882,19 @@ impl Window {
                     }
                 }
 
-                win.imp().playlist_view.update_loading(scanned, n_files);
+                win.imp().playlist_view.update_loading(scanned, total.get());
 
-                if files.peek().is_some() {
+                // More files may have been appended while this batch was
+                // parsing; keep the same loader alive until all are done.
+                if !files.borrow().is_empty() {
                     return glib::ControlFlow::Continue;
                 }
 
+                win.imp().active_queue_load.replace(None);
                 win.imp().queue_loading.set(false);
                 debug!(
                     "Total loading time for {} files: {} ms",
-                    n_files,
+                    total.get(),
                     now.elapsed().as_millis()
                 );
 
@@ -2874,7 +2916,9 @@ impl Window {
 
                     let pending_restore = win.imp().pending_restore.take();
 
-                    // Bulk add to avoid hammering the UI with list model updates
+                    // Bulk add to avoid hammering the UI with list model updates.
+                    // The queue sorts every album by disc and track number from
+                    // the tags, so files opened in any order end up in order.
                     queue.add_songs(&songs);
 
                     debug!(
