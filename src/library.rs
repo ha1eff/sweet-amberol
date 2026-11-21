@@ -351,8 +351,20 @@ impl Library {
 
     /// Albums ordered by the newest file modification time in each album.
     pub fn recent_albums(&self, limit: u32) -> LibraryResult<Vec<AlbumRecord>> {
+        self.recent_albums_from(limit, 0)
+    }
+
+    /// A page of recent albums, skipping the albums already shown. Used by the
+    /// infinite scroll on the Recent Albums page; the cached album list makes
+    /// each additional page cheap to produce.
+    pub fn recent_albums_from(&self, limit: u32, offset: u32) -> LibraryResult<Vec<AlbumRecord>> {
         let albums = self.all_albums()?;
-        Ok(albums.iter().take(limit as usize).cloned().collect())
+        Ok(albums
+            .iter()
+            .skip(offset as usize)
+            .take(limit as usize)
+            .cloned()
+            .collect())
     }
 
     /// A random selection of albums. Each call returns a fresh selection.

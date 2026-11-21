@@ -43,6 +43,8 @@ mod imp {
         #[template_child]
         pub albums_grid: TemplateChild<gtk::GridView>,
         #[template_child]
+        pub albums_scroll: TemplateChild<gtk::ScrolledWindow>,
+        #[template_child]
         pub library_stack: TemplateChild<gtk::Stack>,
         #[template_child]
         pub title_label: TemplateChild<gtk::Label>,
@@ -77,6 +79,9 @@ mod imp {
         pub search_results_mode: Cell<bool>,
         pub suppress_search_signal: Cell<bool>,
         pub search_source: RefCell<Option<glib::SourceId>>,
+        /// Infinite scroll is only meaningful on the Recent Albums page.
+        pub recent_pagination: Cell<bool>,
+        pub loading_more: Cell<bool>,
         pub animation: RefCell<Option<adw::TimedAnimation>>,
         pub animation_generation: Cell<u64>,
         pub fade_phase: Cell<FadePhase>,
@@ -87,6 +92,7 @@ mod imp {
         fn default() -> Self {
             Self {
                 albums_grid: TemplateChild::default(),
+                albums_scroll: TemplateChild::default(),
                 library_stack: TemplateChild::default(),
                 title_label: TemplateChild::default(),
                 subtitle_label: TemplateChild::default(),
@@ -111,6 +117,8 @@ mod imp {
                 search_results_mode: Cell::new(false),
                 suppress_search_signal: Cell::new(false),
                 search_source: RefCell::default(),
+                recent_pagination: Cell::new(false),
+                loading_more: Cell::new(false),
                 animation: RefCell::default(),
                 animation_generation: Cell::new(0),
                 fade_phase: Cell::new(FadePhase::Idle),
@@ -228,6 +236,7 @@ mod imp {
                     glib::subclass::Signal::builder("search-toggled")
                         .param_types([bool::static_type()])
                         .build(),
+                    glib::subclass::Signal::builder("load-more-albums").build(),
                 ]
             });
             SIGNALS.as_ref()
@@ -502,6 +511,50 @@ impl LibraryView {
             }
         ));
         imp.albums_grid.add_controller(empty_click);
+
+        // Ask the window for the next page of recent albums once the user
+        // scrolls close to the bottom. Only `value-changed` is watched: adding
+        // a page changes the adjustment's upper bound but not its value, so
+        // this cannot trigger a second load by itself.
+        imp.albums_scroll.vadjustment().connect_value_changed(clone!(
+            #[weak(rename_to = view)]
+            self,
+            move |adjustment| {
+                let imp = view.imp();
+                if !imp.recent_pagination.get()
+                    || imp.loading_more.get()
+                    || imp.search_mode.get()
+                {
+                    return;
+                }
+
+                let upper = adjustment.upper();
+                let remaining = upper - adjustment.value() - adjustment.page_size();
+                if upper > 0.0 && remaining <= adjustment.page_size() * 0.5 {
+                    imp.loading_more.set(true);
+                    view.emit_by_name::<()>("load-more-albums", &[]);
+                }
+            }
+        ));
+    }
+
+    /// Appends a freshly loaded page without disturbing the current selection.
+    pub fn append_albums(&self, albums: Vec<Album>) {
+        if albums.is_empty() {
+            self.imp().loading_more.set(false);
+            return;
+        }
+        let imp = self.imp();
+        let position = imp.store.n_items();
+        imp.store.splice(position, 0, &albums);
+        self.update_visible_page();
+        imp.loading_more.set(false);
+    }
+
+    /// Called by the window when a page request could not be fulfilled, so a
+    /// failed load does not block later attempts.
+    pub fn finish_load_more(&self) {
+        self.imp().loading_more.set(false);
     }
 
     pub fn set_albums(&self, albums: Vec<Album>) {
@@ -512,6 +565,7 @@ impl LibraryView {
     fn replace_albums(&self, albums: Vec<Album>) {
         let imp = self.imp();
         self.clear_selection();
+        imp.loading_more.set(false);
         imp.store.remove_all();
         imp.store.splice(0, 0, &albums);
         self.update_visible_page();
@@ -799,6 +853,7 @@ impl LibraryView {
 
         imp.updating_buttons.set(true);
         imp.artist_mode.set(true);
+        imp.recent_pagination.set(false);
         imp.random_mode.set(false);
         imp.favorites_mode.set(false);
         imp.search_results_mode.set(false);
@@ -824,6 +879,7 @@ impl LibraryView {
         imp.random_mode.set(false);
         imp.favorites_mode.set(false);
         imp.artist_mode.set(false);
+        imp.recent_pagination.set(false);
         imp.search_results_mode.set(true);
         imp.updating_buttons.set(true);
         imp.title_label.set_label(&i18n("Search Results"));
@@ -844,6 +900,8 @@ impl LibraryView {
         imp.favorites_mode.set(false);
         imp.artist_mode.set(false);
         imp.search_results_mode.set(false);
+        imp.recent_pagination.set(!random);
+        imp.loading_more.set(false);
         imp.updating_buttons.set(true);
         if random {
             imp.title_label.set_label(&i18n("Random Albums"));
@@ -865,6 +923,7 @@ impl LibraryView {
         imp.random_mode.set(false);
         imp.favorites_mode.set(true);
         imp.artist_mode.set(false);
+        imp.recent_pagination.set(false);
         imp.search_results_mode.set(false);
         imp.updating_buttons.set(true);
         imp.title_label.set_label(&i18n("Favorite Albums"));

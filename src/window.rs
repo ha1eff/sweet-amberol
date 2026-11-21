@@ -46,9 +46,6 @@ pub enum WindowMode {
     LibraryView,
 }
 
-// Recent albums are not affected by the random album count setting.
-const LIBRARY_RECENT_ALBUM_LIMIT: u32 = 60;
-
 #[derive(Clone)]
 pub enum LibraryPage {
     Recent {
@@ -741,6 +738,18 @@ impl Window {
         );
 
         self.imp().library_view.connect_closure(
+            "load-more-albums",
+            false,
+            closure_local!(
+                #[weak(rename_to = win)]
+                self,
+                move |_view: LibraryView| {
+                    win.load_more_recent_albums();
+                }
+            ),
+        );
+
+        self.imp().library_view.connect_closure(
             "favorites-mode-changed",
             false,
             closure_local!(
@@ -1137,7 +1146,7 @@ impl Window {
         let albums = if random {
             library.random_albums(self.album_limit())
         } else {
-            library.recent_albums(LIBRARY_RECENT_ALBUM_LIMIT)
+            library.recent_albums(self.album_limit())
         };
 
         match albums {
@@ -1172,6 +1181,61 @@ impl Window {
                 None
             }
         }
+    }
+
+    /// Loads one more page of recent albums after the grid is scrolled to the
+    /// bottom. The page size follows the album limit from the settings, and
+    /// albums already shown are skipped so nothing is duplicated.
+    fn load_more_recent_albums(&self) {
+        let imp = self.imp();
+
+        let (offset, total) = match imp.library_current_page.borrow().as_ref() {
+            Some(LibraryPage::Recent { albums, album_count }) => {
+                (albums.len() as u32, *album_count)
+            }
+            _ => {
+                imp.library_view.finish_load_more();
+                return;
+            }
+        };
+
+        if offset >= total {
+            imp.library_view.finish_load_more();
+            return;
+        }
+
+        let Some(library) = self.library() else {
+            imp.library_view.finish_load_more();
+            return;
+        };
+
+        let records = match library.recent_albums_from(self.album_limit(), offset) {
+            Ok(records) if !records.is_empty() => records,
+            _ => {
+                imp.library_view.finish_load_more();
+                return;
+            }
+        };
+
+        let favorites = library.favorite_album_keys().unwrap_or_default();
+        let mut new_albums = Vec::with_capacity(records.len());
+        for record in records {
+            let album = Album::new(record);
+            let key = {
+                let record = album.record();
+                (record.title, record.artist)
+            };
+            album.set_favorite(favorites.contains(&key));
+            new_albums.push(album);
+        }
+
+        if let Some(LibraryPage::Recent { albums, .. }) =
+            imp.library_current_page.borrow_mut().as_mut()
+        {
+            albums.extend(new_albums.iter().cloned());
+        }
+        imp.library_albums.borrow_mut().extend(new_albums.iter().cloned());
+        imp.library_view.append_albums(new_albums);
     }
 
     fn search_library(&self, query: &str) {
@@ -1272,7 +1336,7 @@ impl Window {
 
         match page {
             LibraryPage::Recent { .. } => {
-                if let Ok(albums) = library.recent_albums(LIBRARY_RECENT_ALBUM_LIMIT) {
+                if let Ok(albums) = library.recent_albums(self.album_limit()) {
                     let album_count = library.album_count().unwrap_or(0);
                     let albums = albums.into_iter().map(Album::new).collect();
                     self.apply_library_page(
