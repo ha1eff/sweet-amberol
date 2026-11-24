@@ -529,3 +529,7 @@ msgstr "Trenutno predvaja »{title}« ({artist})"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Mape ni mogoče odpreti"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Razni izvajalci"

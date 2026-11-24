@@ -652,3 +652,7 @@ msgstr "ناتوان در گشودن شاخه"
 
 #~ msgid "Show the current position inside the song"
 #~ msgstr "نمایش موقعیت حال درون آهنگ"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "هنرمندان مختلف"

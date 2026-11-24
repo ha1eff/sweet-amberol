@@ -534,3 +534,7 @@ msgstr "Reproducindo actualmentex «{title}» por «{artist}»"
 
 #~ msgid "“{}” is not a supported audio file"
 #~ msgstr "“{}” non é un ficheiro de son compatíbel"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Artistas variados"

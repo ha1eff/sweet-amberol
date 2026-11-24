@@ -556,3 +556,7 @@ msgstr "Ezin da karpeta ireki"
 
 #~ msgid "Choose a folder"
 #~ msgstr "Aukeratu karpeta bat"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Hainbat artista"

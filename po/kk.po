@@ -505,3 +505,7 @@ msgstr "Қазір “{title}” (“{artist}”) ойнатылуда"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Буманы ашу мүмкін емес"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Әр түрлі орындаушылар"

@@ -600,3 +600,7 @@ msgstr "לא ניתן לפתוח תיקייה"
 
 #~ msgid "Choose a folder"
 #~ msgstr "בחירת תיקייה"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "אמנים שונים"

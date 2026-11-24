@@ -505,3 +505,7 @@ msgstr "Atualmente a reproduzir “{title}” de \"{artist}\"."
 
 #~ msgid "Amberol is running in the background"
 #~ msgstr "O Amberol está a ser executado em segundo plano"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Vários artistas"

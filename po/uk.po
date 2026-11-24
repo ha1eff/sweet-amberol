@@ -609,3 +609,7 @@ msgstr "Не вдалося відкрити теку"
 
 #~ msgid "Show the playlist"
 #~ msgstr "Показати список відтворення"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Різні виконавці"

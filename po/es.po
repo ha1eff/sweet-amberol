@@ -543,3 +543,7 @@ msgstr "No se puede abrir la carpeta"
 
 #~ msgid "“{}” is not a supported audio file"
 #~ msgstr "«{}» no es un archivo de sonido soportado"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Varios artistas"

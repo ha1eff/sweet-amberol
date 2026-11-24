@@ -496,3 +496,7 @@ msgstr "Nuntempe ludas “{title}” de “{artist}”"
 #: src/window.rs:1560
 msgid "Unable to open folder"
 msgstr "Ne eblas malfermi dosierujon"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Diversaj artistoj"

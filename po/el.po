@@ -518,3 +518,7 @@ msgstr "Αδυναμία ανοίγματος φακέλου"
 
 #~ msgid "Repeat All Tracks"
 #~ msgstr "Επανάληψη όλων των κομματιών"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Διάφοροι καλλιτέχνες"

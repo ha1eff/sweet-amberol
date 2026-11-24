@@ -494,3 +494,7 @@ msgstr "Hozirgi \"{title}\" musiqa \"{artist}\" tomonidan ijro etilmoqda"
 #: src/window.rs:1559
 msgid "Unable to open folder"
 msgstr "Jildni ochish imkonsiz"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Turli ijodkorlar"

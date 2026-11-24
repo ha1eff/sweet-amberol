@@ -522,3 +522,7 @@ msgstr "В момента слушате „{title}“ от {artist}"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Папката не може да се отвори"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Разни изпълнители"

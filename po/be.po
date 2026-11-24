@@ -544,3 +544,7 @@ msgstr "Немагчыма адкрыць папку"
 
 #~ msgid "Amberol cannot run in the background"
 #~ msgstr "Amberol не можа працаваць у фонавым рэжыме"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Розныя выканаўцы"

@@ -506,3 +506,7 @@ msgstr "ขณะนี้กำลังเล่น “{title}” โดย �
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "ไม่สามารถเปิดโฟลเดอร์ได้"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "ศิลปินหลากหลาย"

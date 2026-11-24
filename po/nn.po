@@ -502,3 +502,7 @@ msgstr "Spelar av «{title}» av «{artist}»"
 #: src/window.rs:1560
 msgid "Unable to open folder"
 msgstr "Klarte ikkje å opna mappe"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Diverse artistar"

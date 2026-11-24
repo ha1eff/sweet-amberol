@@ -548,3 +548,7 @@ msgstr "Nepavyksta atverti aplanko"
 
 #~ msgid "Amberol cannot run in the background"
 #~ msgstr "Amberol negali veikti fone"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Įvairūs atlikėjai"

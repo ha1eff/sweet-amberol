@@ -596,3 +596,7 @@ msgstr "Não foi possível abrir a pasta"
 
 #~ msgid "Show the playlist"
 #~ msgstr "Mostrar lista de reprodução"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Vários artistas"

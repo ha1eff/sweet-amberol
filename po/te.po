@@ -510,3 +510,7 @@ msgstr "ప్రస్తుతం ప్లే అవుతున్నది 
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "ఫోల్డర్‌ను తెరవలేకపోతున్నాను"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "వివిధ కళాకారులు"

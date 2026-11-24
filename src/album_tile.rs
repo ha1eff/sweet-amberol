@@ -8,7 +8,7 @@ use glib::clone;
 use gtk::{gdk, glib, prelude::*, CompositeTemplate};
 use once_cell::sync::Lazy;
 
-use crate::{album::Album, cover_picture::CoverPicture, i18n::i18n};
+use crate::{album::Album, cover_picture::CoverPicture, i18n::i18n, utils};
 
 mod imp {
     use super::*;
@@ -236,7 +236,8 @@ impl AlbumTile {
         imp.cover_stack.set_visible_child_name("no-cover");
 
         imp.title_label.set_label(&album.title());
-        imp.artist_label.set_label(&album.artist());
+        imp.artist_label
+            .set_label(&utils::display_artist_name(&album.artist()));
 
         if self.is_mapped() {
             self.load_cover();

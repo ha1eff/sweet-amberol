@@ -541,3 +541,7 @@ msgstr "Kan ikke åbne mappen"
 
 #~ msgid "Amberol is running in the background"
 #~ msgstr "Amberol kører i baggrunden"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Forskellige kunstnere"

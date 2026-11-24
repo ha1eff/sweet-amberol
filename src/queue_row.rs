@@ -438,8 +438,9 @@ impl QueueRow {
         // A plain label sizes itself exactly to its text, so the clickable
         // artist area never grows past the artist name (and it still
         // ellipsizes when the row is too narrow).
-        imp.song_artist_label.set_text(artist);
-        imp.selection_artist_label.set_text(Some(artist));
+        let displayed = utils::display_artist_name(artist);
+        imp.song_artist_label.set_text(&displayed);
+        imp.selection_artist_label.set_text(Some(&displayed));
     }
 
     fn set_song_cover(&self, cover: Option<gdk::Texture>) {
@@ -607,7 +608,8 @@ impl QueueRow {
     pub fn set_artist_markup(&self, credit: &str, markup: &str) {
         let imp = self.imp();
         imp.song_artist_label.set_markup(markup);
-        imp.selection_artist_label.set_text(Some(credit));
+        imp.selection_artist_label
+            .set_text(Some(&utils::display_artist_name(credit)));
     }
 }
 

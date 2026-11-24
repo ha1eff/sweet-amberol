@@ -563,3 +563,7 @@ msgstr "无法打开文件夹"
 
 #~ msgid "Playing next"
 #~ msgstr "接下来播放"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "群星"

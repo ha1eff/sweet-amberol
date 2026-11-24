@@ -17,6 +17,7 @@ use log::{debug, warn};
 use crate::{
     audio::{AudioPlayer, RepeatMode},
     config::APPLICATION_ID,
+    i18n::i18n,
 };
 
 pub fn settings_manager() -> gio::Settings {
@@ -43,6 +44,28 @@ pub const ARTIST_LINK_PREFIX: &str = "artist:";
 pub fn artist_from_link(uri: &str) -> Option<&str> {
     uri.strip_prefix(ARTIST_LINK_PREFIX)
         .filter(|artist| !artist.is_empty())
+}
+
+/// Shows the localized name for the generic "Various Artists" credit when
+/// the interface is translated. Only the displayed text changes: the tag in
+/// the audio file and the value stored in the library keep their original
+/// spelling, so links and searches still point at the real artist name.
+pub fn display_artist_name(artist: &str) -> String {
+    let normalized = artist.trim().to_lowercase();
+    let generic = matches!(
+        normalized.as_str(),
+        "various artists" | "various artist" | "various" | "v/a" | "va"
+    );
+    if !generic {
+        return artist.to_string();
+    }
+
+    let translated = i18n("Various Artists");
+    if translated == "Various Artists" {
+        artist.to_string()
+    } else {
+        translated
+    }
 }
 
 /// Builds Pango markup in which every known artist mentioned in `credit`
@@ -88,7 +111,7 @@ pub fn artist_links_markup(credit: &str, artists: &[String]) -> String {
             continue;
         }
         markup.push_str(&glib::markup_escape_text(&credit[cursor..begin]));
-        let label = glib::markup_escape_text(artist);
+        let label = glib::markup_escape_text(&display_artist_name(artist));
         let href = glib::markup_escape_text(&format!("{ARTIST_LINK_PREFIX}{artist}"));
         markup.push_str(&format!("<a href=\"{href}\">{label}</a>"));
         cursor = end;

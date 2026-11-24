@@ -23,6 +23,10 @@ msgstr ""
 msgid "Amberol"
 msgstr ""
 
+#: src/utils.rs
+msgid "Various Artists"
+msgstr ""
+
 #: data/io.bassi.Amberol.desktop.in.in:4
 msgid "Music Player"
 msgstr ""

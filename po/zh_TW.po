@@ -506,3 +506,7 @@ msgstr "目前正在播放「{title}」，演出者是「{artist}」"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "無法開啟資料夾"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "群星"

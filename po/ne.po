@@ -476,3 +476,7 @@ msgstr "\"%s\" पृष्ठभूमिमा चलिरहेको छ"
 #, fuzzy
 msgid "Amberol cannot run in the background"
 msgstr "पृष्ठभूमि मा चलाउनुहोस्"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "विविध कलाकार"

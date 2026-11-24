@@ -558,3 +558,7 @@ msgstr "Kan map niet openen"
 
 #~ msgid "Choose a folder"
 #~ msgstr "Kies een map"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Diverse artiesten"

@@ -520,3 +520,7 @@ msgstr[5] "حُدِّدَت {} أغنية"
 #: src/window.rs:1514
 msgid "Currently playing “{title}” by “{artist}”"
 msgstr "يُشَغِّل «{title}» بواسطة «{artist}»"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "فنانون متنوعون"

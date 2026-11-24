@@ -522,3 +522,7 @@ msgstr "“{title}” di “{artist}” in riproduzione"
 msgid "Unable to open folder"
 msgstr "Impossibile accedere alla cartella"
 
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Artisti vari"

@@ -541,3 +541,7 @@ msgstr "Kansion avaaminen ei onnistunut"
 
 #~ msgid "Amberol is running in the background"
 #~ msgstr "Amberol on käynnissä taustalla"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Useat artistit"

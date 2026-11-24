@@ -499,3 +499,7 @@ msgstr "Hiện đang chơi “{}” bởi “{}”"
 #: src/window.rs:1559
 msgid "Unable to open folder"
 msgstr "Không thể mở thư mục"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Nhiều nghệ sĩ"

@@ -483,3 +483,7 @@ msgstr ""
 #~ msgstr[0] "{} sat"
 #~ msgstr[1] "{} sata"
 #~ msgstr[2] "{} sata"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Razni izvođači"

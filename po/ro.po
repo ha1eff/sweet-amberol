@@ -514,3 +514,7 @@ msgstr "Acum se redă „{title}” de „{artist}”"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Dosarul nu poate fi deschis"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Artiști variați"

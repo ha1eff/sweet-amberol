@@ -518,3 +518,7 @@ msgstr "Hazırda “{title}” mahnısı “{artist}” tərəfindən çalınır
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Qovluğu açmaq mümkün olmadı"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Müxtəlif ifaçılar"

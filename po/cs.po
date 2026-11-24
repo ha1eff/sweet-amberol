@@ -545,3 +545,7 @@ msgstr "Nelze otevřít složku"
 
 #~ msgid "Amberol cannot run in the background"
 #~ msgstr "Amberol nemůže běžet na pozadí"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Různí interpreti"

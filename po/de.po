@@ -571,3 +571,7 @@ msgstr "Ordner konnte nicht geöffnet werden"
 #~ msgctxt "shortcut window"
 #~ msgid "Previous Track"
 #~ msgstr "Vorheriger Titel"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Verschiedene Interpreten"

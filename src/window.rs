@@ -4796,7 +4796,11 @@ impl Window {
 
     fn update_title(&self, song: Option<&Song>) {
         if let Some(song) = song {
-            self.set_title(Some(&format!("{} - {}", song.artist(), song.title())));
+            self.set_title(Some(&format!(
+                "{} - {}",
+                utils::display_artist_name(&song.artist()),
+                song.title()
+            )));
         } else {
             self.set_title(Some("Amberol"));
         }

@@ -547,3 +547,7 @@ msgstr "Не могу да отворим фасциклу"
 
 #~ msgid "Amberol cannot run in the background"
 #~ msgstr "Амберол не може да ради у позадини"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Разни извођачи"

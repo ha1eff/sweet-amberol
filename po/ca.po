@@ -526,3 +526,7 @@ msgstr "No es pot obrir la carpeta"
 
 #~ msgid "Amberol cannot run in the background"
 #~ msgstr "Amberol no es pot executar en segon pla"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Artistes variats"

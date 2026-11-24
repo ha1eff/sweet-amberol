@@ -13,6 +13,7 @@ use crate::{
     album::Album,
     album_tile::AlbumTile,
     i18n::{i18n, ni18n_f},
+    utils,
 };
 
 const ALBUM_FADE_OUT_MS: u32 = 120;
@@ -880,7 +881,8 @@ impl LibraryView {
         imp.recent_button.set_active(false);
         imp.random_button.set_active(false);
         imp.favorites_button.set_active(false);
-        imp.title_label.set_label(artist);
+        imp.title_label
+            .set_label(&utils::display_artist_name(artist));
         imp.base_subtitle.replace(format!("{albums} | {tracks}"));
         self.update_subtitle();
         imp.play_albums_button

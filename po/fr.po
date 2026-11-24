@@ -521,3 +521,7 @@ msgstr "Lecture de « {title} » par « {artist} »"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Impossible d’ouvrir le dossier"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Artistes variés"

@@ -514,3 +514,7 @@ msgstr "Spiller «{title}» av «{artist}»"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Kan ikke åpne mappe"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Diverse artister"

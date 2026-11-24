@@ -17,4 +17,5 @@ src/cover_picture.rs
 src/library_view.rs
 src/playback_control.rs
 src/queue_row.rs
+src/utils.rs
 src/window.rs

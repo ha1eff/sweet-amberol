@@ -525,3 +525,7 @@ msgstr "Nie je možné otvoriť priečinok"
 
 #~ msgid "Nostragodus"
 #~ msgstr "Nostragodus"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Rôzni interpreti"

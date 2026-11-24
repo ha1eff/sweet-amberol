@@ -514,3 +514,7 @@ msgstr "폴더를 열 수 없습니다"
 
 #~ msgid "Add File"
 #~ msgstr "파일 추가"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "다양한 아티스트"

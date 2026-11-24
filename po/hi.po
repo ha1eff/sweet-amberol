@@ -459,3 +459,7 @@ msgstr[1] "{} गाने चयनित"
 #: src/window.rs:1392
 msgid "Currently playing “{title}” by “{artist}”"
 msgstr "अभी \"{artist}\" द्वारा \"{title}\" बजाया जा रहा है"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "विविध कलाकार"

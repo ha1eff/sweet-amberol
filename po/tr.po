@@ -517,3 +517,7 @@ msgstr "“{artist}”, “{title}” çalıyor"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Klasör açılamadı"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Çeşitli sanatçılar"

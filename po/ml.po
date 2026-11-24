@@ -481,3 +481,7 @@ msgstr[1] "{} ഗാനങ്ങൾ തിരഞ്ഞെടുത്തു"
 #: src/window.rs:1514
 msgid "Currently playing “{title}” by “{artist}”"
 msgstr "നിലവിൽ ഓടുന്നത് “{title}” by “{artist}”"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "വിവിധ കലാകാരന്മാർ"

@@ -534,3 +534,7 @@ msgstr "საქაღალდის გახსნა შეუძლებ�
 #~ msgid_plural "{} hours"
 #~ msgstr[0] "{} საათი"
 #~ msgstr[1] "{} საათი"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "სხვადასხვა შემსრულებელი"

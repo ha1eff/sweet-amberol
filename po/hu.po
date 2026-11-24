@@ -516,3 +516,7 @@ msgstr "Jelenleg játszott: „{artist}” – „{title}”"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Nem lehet megnyitni a mappát"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Különböző előadók"

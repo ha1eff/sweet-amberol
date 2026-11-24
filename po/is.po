@@ -539,3 +539,7 @@ msgstr "Get ekki ekki opnað möppu"
 
 #~ msgid "Amberol cannot run in the background"
 #~ msgstr "Amberol getur ekki keyrt í bakgrunni"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Ýmsir listamenn"

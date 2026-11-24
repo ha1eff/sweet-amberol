@@ -585,3 +585,7 @@ msgstr "Kunde inte öppna mapp"
 
 #~ msgid "Show the playlist"
 #~ msgstr "Visa spellistan"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Diverse artister"

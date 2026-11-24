@@ -524,3 +524,7 @@ msgstr "Odtwarzanie utworu „{title}” — {artist}"
 #: src/window.rs:1564
 msgid "Unable to open folder"
 msgstr "Nie można otworzyć katalogu"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Różni wykonawcy"

@@ -550,3 +550,7 @@ msgstr "Sedang memutar \"{title}\" oleh \"{artist}\""
 
 #~ msgid "Choose a folder"
 #~ msgstr "Pilih folder"
+
+#: src/utils.rs
+msgid "Various Artists"
+msgstr "Berbagai artis"
