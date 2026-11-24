@@ -422,6 +422,10 @@ mod imp {
             klass.install_action("queue.clear", None, move |win, _, _| {
                 debug!("Window::queue.clear()");
                 win.clear_queue();
+                // With an empty queue the library is the destination. Make sure
+                // its grid is populated right away instead of waiting for the
+                // next navigation or an application restart.
+                win.show_library();
             });
             klass.install_action("win.show-library", None, move |win, _, _| {
                 debug!("Window::win.show-library()");
@@ -913,7 +917,7 @@ impl Window {
         // The grid is kept up to date by the scan and file monitors. Rebuilding
         // it here made switching from the player back to the library needlessly
         // reload every album and cover.
-        if self.imp().library_albums.borrow().is_empty() {
+        if self.imp().library_albums.borrow().is_empty() || !self.imp().library_view.has_albums() {
             self.refresh_current_library_tab();
         }
         self.start_library_scan(false);
@@ -3536,6 +3540,11 @@ impl Window {
                 .unwrap_or(0)
                 > 0
             {
+                // Clearing the queue also drops every cover cache. Repopulate
+                // the grid if it went empty so the library is visible at once.
+                if self.imp().library_albums.borrow().is_empty() {
+                    self.refresh_current_library_tab();
+                }
                 self.switch_mode(WindowMode::LibraryView);
             } else {
                 self.switch_mode(WindowMode::InitialView);

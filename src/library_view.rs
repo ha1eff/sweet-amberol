@@ -549,6 +549,10 @@ impl LibraryView {
         ));
     }
 
+    pub fn has_albums(&self) -> bool {
+        self.imp().store.n_items() > 0
+    }
+
     /// Appends a freshly loaded page without disturbing the current selection.
     pub fn append_albums(&self, albums: Vec<Album>) {
         if albums.is_empty() {
